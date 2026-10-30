@@ -63,6 +63,8 @@ services:
     #   git clone https://github.com/fengyinxia/qoder2api upstream/qoder2api
     build:
       context: ./upstream/qoder2api
+      # 用仓库自带的包装 Dockerfile（仅多一个 pip 国内镜像源），不改上游文件
+      dockerfile: ../../deploy/qoder2api.Dockerfile
     # 方式 b：自备镜像 —— 注释掉上面 build: 段，改用：
     # image: your-registry/qoder2api:latest
     image: qoder2api:latest
