@@ -1,1 +1,13 @@
-{}
+{
+  "trigger": "Search",
+  "triggerHint": "Open command palette (Ctrl K)",
+  "title": "Command palette",
+  "desc": "Type a page name or path and press Enter to jump",
+  "placeholder": "Search pages, e.g. “Accounts” or “settings”…",
+  "empty": "No matching pages",
+  "emptyHint": "Try different wording, or use the menu bar navigation",
+  "hintMove": "Move",
+  "hintOpen": "open",
+  "hintClose": "Close",
+  "results": "{n} results"
+}

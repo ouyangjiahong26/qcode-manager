@@ -1,1 +1,18 @@
-{}
+{
+  "sectionTabs": "ページ内ナビゲーション",
+  "dashboard": "ダッシュボード",
+  "accounts": "アカウントプール",
+  "keys": "キー",
+  "models": "モデル",
+  "playground": "テスト環境",
+  "stats": "統計",
+  "logs": "ログ",
+  "security": "セキュリティ",
+  "settings": "設定",
+  "quickAdd": "アカウント追加",
+  "quickAddSoon": "アカウント取り込み（PAT 貼り付け）は準備中です。当面はアカウントページで管理してください。",
+  "profile": "プロフィール",
+  "groupOverview": "概要",
+  "groupOps": "運用",
+  "groupGovernance": "ガバナンス"
+}

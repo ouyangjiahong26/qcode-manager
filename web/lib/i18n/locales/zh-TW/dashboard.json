@@ -1,1 +1,26 @@
-{}
+{
+  "title": "儀表板",
+  "desc": "總覽與近期用量快照",
+  "cardTotal": "PAT 總數",
+  "cardActive": "健康帳號",
+  "cardInvalid": "失效帳號",
+  "cardTodayReq": "今日請求",
+  "cardTodayTokens": "今日 Tokens",
+  "cardFailRate": "今日失敗率",
+  "hintEnabled": "{count} 個啟用中",
+  "hintUnknown": "{count} 個未測活",
+  "hintFailures": "今日失敗 {count} 次",
+  "trendTitle": "用量趨勢",
+  "trendRange": "近 14 天",
+  "requests": "請求",
+  "failed": "失敗",
+  "tokens": "Tokens",
+  "byModelTitle": "按模型用量",
+  "byModelRange": "近 30 天",
+  "byModelEmpty": "暫無模型用量資料",
+  "failTitle": "失敗摘要",
+  "failToday4xx": "今日 4xx",
+  "failToday5xx": "今日 5xx",
+  "failWeek4xx": "近 7 天 4xx",
+  "failWeek5xx": "近 7 天 5xx"
+}

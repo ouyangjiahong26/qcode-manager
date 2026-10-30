@@ -1,1 +1,15 @@
-{}
+{
+  "expired": "만료됨",
+  "permanent": "영구",
+  "seconds": "{n}초",
+  "minutes": "{n}분",
+  "hours": "{n}시간",
+  "days": "{n}일",
+  "yesterday": "어제",
+  "never": "없음",
+  "justNow": "방금",
+  "secondsAgo": "{n}초 전",
+  "minutesAgo": "{n}분 전",
+  "hoursAgo": "{n}시간 전",
+  "daysAgo": "{n}일 전"
+}

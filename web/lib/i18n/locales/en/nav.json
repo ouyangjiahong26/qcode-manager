@@ -1,1 +1,18 @@
-{}
+{
+  "sectionTabs": "In-page navigation",
+  "dashboard": "Dashboard",
+  "accounts": "Accounts",
+  "keys": "Keys",
+  "models": "Models",
+  "playground": "Playground",
+  "stats": "Statistics",
+  "logs": "Logs",
+  "security": "Security",
+  "settings": "Settings",
+  "quickAdd": "Add account",
+  "quickAddSoon": "Account onboarding (paste PAT) is coming soon; manage accounts on the Accounts page for now.",
+  "profile": "Profile",
+  "groupOverview": "Overview",
+  "groupOps": "Operations",
+  "groupGovernance": "Governance"
+}

@@ -1,1 +1,8 @@
-{}
+{
+  "close": "Close",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "copyFailed": "Copy failed — please select the text manually",
+  "comingSoon": "Coming soon",
+  "whatsNewTitle": "What's new"
+}

@@ -21,6 +21,12 @@ import zhCNSettings from './locales/zh-CN/settings.json';
 import zhCNState from './locales/zh-CN/state.json';
 import zhCNFormat from './locales/zh-CN/format.json';
 import zhCNLanguage from './locales/zh-CN/language.json';
+import zhCNAccounts from './locales/zh-CN/accounts.json';
+import zhCNDashboard from './locales/zh-CN/dashboard.json';
+import zhCNKeys from './locales/zh-CN/keys.json';
+import zhCNLogs from './locales/zh-CN/logs.json';
+import zhCNModels from './locales/zh-CN/models.json';
+import zhCNPlayground from './locales/zh-CN/playground.json';
 
 import zhTWCommon from './locales/zh-TW/common.json';
 import zhTWNav from './locales/zh-TW/nav.json';
@@ -35,6 +41,12 @@ import zhTWSettings from './locales/zh-TW/settings.json';
 import zhTWState from './locales/zh-TW/state.json';
 import zhTWFormat from './locales/zh-TW/format.json';
 import zhTWLanguage from './locales/zh-TW/language.json';
+import zhTWAccounts from './locales/zh-TW/accounts.json';
+import zhTWDashboard from './locales/zh-TW/dashboard.json';
+import zhTWKeys from './locales/zh-TW/keys.json';
+import zhTWLogs from './locales/zh-TW/logs.json';
+import zhTWModels from './locales/zh-TW/models.json';
+import zhTWPlayground from './locales/zh-TW/playground.json';
 
 import enCommon from './locales/en/common.json';
 import enNav from './locales/en/nav.json';
@@ -49,6 +61,12 @@ import enSettings from './locales/en/settings.json';
 import enState from './locales/en/state.json';
 import enFormat from './locales/en/format.json';
 import enLanguage from './locales/en/language.json';
+import enAccounts from './locales/en/accounts.json';
+import enDashboard from './locales/en/dashboard.json';
+import enKeys from './locales/en/keys.json';
+import enLogs from './locales/en/logs.json';
+import enModels from './locales/en/models.json';
+import enPlayground from './locales/en/playground.json';
 
 import jaCommon from './locales/ja/common.json';
 import jaNav from './locales/ja/nav.json';
@@ -63,6 +81,12 @@ import jaSettings from './locales/ja/settings.json';
 import jaState from './locales/ja/state.json';
 import jaFormat from './locales/ja/format.json';
 import jaLanguage from './locales/ja/language.json';
+import jaAccounts from './locales/ja/accounts.json';
+import jaDashboard from './locales/ja/dashboard.json';
+import jaKeys from './locales/ja/keys.json';
+import jaLogs from './locales/ja/logs.json';
+import jaModels from './locales/ja/models.json';
+import jaPlayground from './locales/ja/playground.json';
 
 import koCommon from './locales/ko/common.json';
 import koNav from './locales/ko/nav.json';
@@ -77,11 +101,18 @@ import koSettings from './locales/ko/settings.json';
 import koState from './locales/ko/state.json';
 import koFormat from './locales/ko/format.json';
 import koLanguage from './locales/ko/language.json';
+import koAccounts from './locales/ko/accounts.json';
+import koDashboard from './locales/ko/dashboard.json';
+import koKeys from './locales/ko/keys.json';
+import koLogs from './locales/ko/logs.json';
+import koModels from './locales/ko/models.json';
+import koPlayground from './locales/ko/playground.json';
 
 /** 域清单：新增域时在此登记（顺序即文件顺序，与上面的 import 一一对应）。 */
 export const DOMAINS = [
   'common', 'nav', 'login', 'dock', 'palette', 'profile', 'theme',
   'error', 'notFound', 'settings', 'state', 'format', 'language',
+  'accounts', 'dashboard', 'keys', 'logs', 'models', 'playground',
 ] as const;
 
 type Domain = (typeof DOMAINS)[number];
@@ -132,30 +163,40 @@ const zhCN: Record<Domain, Dict> = {
   palette: zhCNPalette, profile: zhCNProfile, theme: zhCNTheme, error: zhCNError,
   notFound: zhCNNotFound, settings: zhCNSettings, state: zhCNState,
   format: zhCNFormat, language: zhCNLanguage,
+  accounts: zhCNAccounts, dashboard: zhCNDashboard, keys: zhCNKeys,
+  logs: zhCNLogs, models: zhCNModels, playground: zhCNPlayground,
 };
 const zhTW: Record<Domain, Dict> = {
   common: zhTWCommon, nav: zhTWNav, login: zhTWLogin, dock: zhTWDock,
   palette: zhTWPalette, profile: zhTWProfile, theme: zhTWTheme, error: zhTWError,
   notFound: zhTWNotFound, settings: zhTWSettings, state: zhTWState,
   format: zhTWFormat, language: zhTWLanguage,
+  accounts: zhTWAccounts, dashboard: zhTWDashboard, keys: zhTWKeys,
+  logs: zhTWLogs, models: zhTWModels, playground: zhTWPlayground,
 };
 const en: Record<Domain, Dict> = {
   common: enCommon, nav: enNav, login: enLogin, dock: enDock,
   palette: enPalette, profile: enProfile, theme: enTheme, error: enError,
   notFound: enNotFound, settings: enSettings, state: enState,
   format: enFormat, language: enLanguage,
+  accounts: enAccounts, dashboard: enDashboard, keys: enKeys,
+  logs: enLogs, models: enModels, playground: enPlayground,
 };
 const ja: Record<Domain, Dict> = {
   common: jaCommon, nav: jaNav, login: jaLogin, dock: jaDock,
   palette: jaPalette, profile: jaProfile, theme: jaTheme, error: jaError,
   notFound: jaNotFound, settings: jaSettings, state: jaState,
   format: jaFormat, language: jaLanguage,
+  accounts: jaAccounts, dashboard: jaDashboard, keys: jaKeys,
+  logs: jaLogs, models: jaModels, playground: jaPlayground,
 };
 const ko: Record<Domain, Dict> = {
   common: koCommon, nav: koNav, login: koLogin, dock: koDock,
   palette: koPalette, profile: koProfile, theme: koTheme, error: koError,
   notFound: koNotFound, settings: koSettings, state: koState,
   format: koFormat, language: koLanguage,
+  accounts: koAccounts, dashboard: koDashboard, keys: koKeys,
+  logs: koLogs, models: koModels, playground: koPlayground,
 };
 
 /** 各语言的完整字典：域合并 + 源语言兜底。 */

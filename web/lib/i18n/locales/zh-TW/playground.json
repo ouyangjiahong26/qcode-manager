@@ -1,1 +1,53 @@
-{}
+{
+  "playground": {
+    "title": "測試台",
+    "description": "用登入會話直接試調上游，無需建立 API 金鑰",
+    "unreadable": "回應沒有可讀的資料流",
+    "emptyAnswer": "（模型沒有回傳內容）",
+    "stopped": "已中斷",
+    "modelsRefreshed": "已重新拉取模型列表",
+    "refreshModels": "重新整理模型",
+    "clearChat": "清空對話",
+    "partialFailed": "有資料沒能刷新成功，顯示的可能是稍早的內容",
+    "adminRequired": "需要管理員權限",
+    "adminRequiredDesc": "測試台會真實消耗帳號呼叫，僅管理員可用",
+    "startTitle": "開始一段對話",
+    "startDesc": "輸入內容即可試調目前選中的模型，回答以串流返回",
+    "currentModel": "目前模型：",
+    "copyAnswer": "複製回答",
+    "tokensTitle": "本條回答的實測 Token 消耗",
+    "tokens": "{n} tokens",
+    "modelsAvailable": "可選模型 {n} 個",
+    "noModels": "暫無可用模型",
+    "sessionTokensTitle": "本次會話累計 Token 消耗",
+    "sessionTokens": "{n} tokens",
+    "footnote1": "對話經帳號池中的 PAT 轉發到上游，會真實消耗呼叫",
+    "footnote2": "呼叫記錄會出現在日誌頁（金鑰列顯示為「—」）"
+  },
+  "chat": {
+    "ph1": "問點什麼…",
+    "ph2": "試試讓模型寫一段程式碼…",
+    "ph3": "換個模型對比一下回答…",
+    "ph4": "直接 Enter 送出，Shift+Enter 換行…",
+    "ph5": "想測試上游連通性？隨便聊兩句…",
+    "send": "傳送",
+    "stop": "停止生成",
+    "selectModel": "選擇模型",
+    "noModels": "暫無可用模型",
+    "reasoningSuffix": " · 推理 {efforts}",
+    "effort": "思考強度",
+    "effortTitle": "選擇推理檔位",
+    "effortUnsupported": "該模型未宣告推理檔位",
+    "effortUnset": "不指定",
+    "keyboardHint": "Enter 送出 · Shift+Enter 換行"
+  },
+  "effort": {
+    "off": "關閉",
+    "minimal": "極低",
+    "low": "低",
+    "medium": "中",
+    "high": "高",
+    "xhigh": "超高",
+    "max": "最高"
+  }
+}

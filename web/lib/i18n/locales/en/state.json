@@ -1,1 +1,5 @@
-{}
+{
+  "loadFailed": "Some data failed to refresh; what is shown may be slightly stale",
+  "loadFailedHint": "The request failed. Click “Retry” to fetch again, or refresh the page later.",
+  "retry": "Retry"
+}

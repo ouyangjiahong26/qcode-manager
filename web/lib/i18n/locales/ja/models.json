@@ -1,1 +1,29 @@
-{}
+{
+  "models": {
+    "title": "モデル",
+    "description": "アップストリームのモデルカタログ",
+    "refetch": "強制的に再取得",
+    "refetchTitle": "キャッシュをバイパスして再取得します。上流の呼び出しを 1 回消費します",
+    "refetching": "モデル一覧を再取得しています…",
+    "refetchDone": "モデル一覧を更新しました",
+    "refetchDoneHint": "キャッシュをバイパスして上流カタログを再取得しました",
+    "refetchFailed": "モデル一覧の取得に失敗しました",
+    "refetchFailedHint": "上流またはアカウントプールが利用できない可能性があります。後でお試しください",
+    "statTotal": "モデル総数",
+    "statTotalHint": "現在の上流 /v1/models が返す一覧です",
+    "statOwners": "提供元",
+    "statOwnersHint": "一覧は同一の提供元からのものです",
+    "statOwnersHintMulti": "owned_by で重複を除いて集計",
+    "statNewest": "最新追加",
+    "statNewestHint": "一覧の中で created が最新のモデルです",
+    "searchPlaceholder": "モデル ID または提供元を検索…",
+    "colId": "モデル ID",
+    "colOwner": "提供元",
+    "colObject": "種類",
+    "colCreated": "追加日時",
+    "emptyTitle": "モデルがありません",
+    "emptyDesc": "上流カタログが空です：アカウントプールに利用可能な PAT があり、上流サービスが正常か確認してください",
+    "noMatchTitle": "一致するモデルがありません",
+    "noMatchDesc": "「{q}」を含むモデルが見つかりません。別のキーワードを試してください"
+  }
+}

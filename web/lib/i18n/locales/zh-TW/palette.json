@@ -1,1 +1,13 @@
-{}
+{
+  "trigger": "搜尋",
+  "triggerHint": "開啟命令面板（Ctrl K）",
+  "title": "命令面板",
+  "desc": "輸入頁面名稱或路徑，按 Enter 跳轉",
+  "placeholder": "搜尋頁面，例如「帳號」「settings」…",
+  "empty": "沒有符合的頁面",
+  "emptyHint": "換個說法試試，或直接走底欄導航",
+  "hintMove": "移動",
+  "hintOpen": "開啟",
+  "hintClose": "關閉",
+  "results": "{n} 筆結果"
+}

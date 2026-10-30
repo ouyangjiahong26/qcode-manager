@@ -1,1 +1,11 @@
-{}
+{
+  "subtitle": "Qoder PAT 帳號池管理與閘道面板",
+  "username": "使用者名稱",
+  "password": "密碼",
+  "passwordPlaceholder": "請輸入密碼",
+  "emptySubmit": "沒有讀到輸入內容：請確認使用者名稱與密碼已填寫（瀏覽器自動填充可能未被識別，可手動補輸一次）",
+  "expiredHint": "工作階段已過期，請重新登入。",
+  "initialPwdHint": "忘記密碼？初始密碼會在服務端首次啟動日誌中打印一次。",
+  "submit": "登入",
+  "legal": "僅供個人學習與內部使用，請遵守上游服務條款"
+}

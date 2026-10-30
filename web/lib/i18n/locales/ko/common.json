@@ -1,1 +1,8 @@
-{}
+{
+  "close": "닫기",
+  "cancel": "취소",
+  "confirm": "확인",
+  "copyFailed": "복사에 실패했습니다. 텍스트를 직접 선택해 복사하세요",
+  "comingSoon": "준비 중",
+  "whatsNewTitle": "이번 업데이트"
+}

@@ -1,1 +1,26 @@
-{}
+{
+  "title": "Profile",
+  "desc": "Account, sessions and preferences",
+  "roleAdmin": "Administrator",
+  "roleViewer": "Read-only",
+  "logout": "Sign out",
+  "logoutTitle": "Sign out?",
+  "logoutDesc": "You will need to enter your username and password again.",
+  "revoke": "Revoke all sessions",
+  "revokeTitle": "Revoke all sessions?",
+  "revokeDesc": "Every issued sign-in cookie (this device and others) becomes invalid immediately; you will need to sign in again.",
+  "revokeHint": "Use when you suspect a session leak; does not affect the password or downstream configuration",
+  "revoked": "All sessions revoked",
+  "systemSettings": "Preferences",
+  "quickLinks": "Quick links",
+  "community": "Community",
+  "communityTitle": "linux.do community",
+  "uiReference": "UI reference",
+  "help": "Help & settings",
+  "about": "About",
+  "aboutDesc": "QCode Manager: a PAT account-pool management and OpenAI-compatible gateway panel for qoder2api.",
+  "versionFallback": " (build number; the running version is authoritative)",
+  "dockLabel": "Dock position",
+  "dockPinned": "Pinned to bottom",
+  "dockFloating": "Floating (draggable)"
+}

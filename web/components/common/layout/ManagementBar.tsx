@@ -39,8 +39,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/animate-ui/radix/dialog';
-import {Avatar, AvatarFallback} from '@/components/ui/avatar';
 import {ConfirmDialog} from '@/components/common/layout/ConfirmDialog';
+import {AddPatDialog} from '@/components/common/accounts/AddPatDialog';
+import {upstreamsApi, type Upstream} from '@/lib/api/upstreams';
+import {Avatar, AvatarFallback} from '@/components/ui/avatar';
 
 const IconOptions = {
   className: 'h-4 w-4',
@@ -91,6 +93,8 @@ export function ManagementBar() {
   const [dockViewport, setDockViewport] = useState<DockViewport>('desktop');
   const [profileOpen, setProfileOpen] = useState(false);
   const [addOpen, setAddOpen] = useState(false);
+  // 分组列表只在打开快速添加时拉一次（失败给空表，弹窗里至少还有默认分组）
+  const [addUpstreams, setAddUpstreams] = useState<Upstream[]>([]);
   const [dockPosition, setDockPosition] = useState<DockPosition | null>(null);
   const [dockMode, setDockMode] = useState<DockMode>('floating');
   const [showDockTip, setShowDockTip] = useState(false);
@@ -109,6 +113,12 @@ export function ManagementBar() {
   const isDraggingRef = useRef(false);
   const dragMovedRef = useRef(false);
   const suppressClickUntilRef = useRef(0);
+
+  /** 打开快速添加：顺手拉分组列表（失败不打扰，弹窗里还有默认分组可用） */
+  function openQuickAdd() {
+    setAddOpen(true);
+    upstreamsApi.list().then((list) => setAddUpstreams(list)).catch(() => {});
+  }
 
   const getViewport = useCallback((): DockViewport => (window.innerWidth >= 768 ? 'desktop' : 'mobile'), []);
 
@@ -528,7 +538,7 @@ export function ManagementBar() {
         <div
           data-slot="dock-quick-add"
           data-dock-no-drag="true"
-          onClick={() => setAddOpen(true)}
+          onClick={openQuickAdd}
           className="w-full h-full flex items-center justify-center cursor-pointer rounded transition-colors"
         >
           <PlusCircle className="h-4 w-4" />
@@ -842,15 +852,16 @@ export function ManagementBar() {
         />
       </div>
 
-      {/* 快速添加：账号纳管（粘贴 PAT）对话框由账号片接入，此处先占位说明 */}
-      <Dialog open={addOpen} onOpenChange={setAddOpen}>
-        <DialogContent showCloseButton className="max-w-[420px]">
-          <DialogHeader>
-            <DialogTitle>{t('nav.quickAdd')}</DialogTitle>
-            <DialogDescription>{t('nav.quickAddSoon')}</DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+      {/* 快速添加：直接挂账号页同款「添加 PAT」弹窗；成功后的通知与
+          accounts-changed 事件由弹窗内部发出，各页面自行刷新。 */}
+      <AddPatDialog
+        open={addOpen}
+        onOpenChange={(v) => {
+          setAddOpen(v);
+          if (!v) setAddUpstreams([]);
+        }}
+        upstreams={addUpstreams}
+      />
     </>
   );
 }

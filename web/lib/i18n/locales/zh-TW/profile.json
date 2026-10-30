@@ -1,1 +1,26 @@
-{}
+{
+  "title": "個人資訊",
+  "desc": "帳號、工作階段與偏好設定",
+  "roleAdmin": "管理員",
+  "roleViewer": "唯讀",
+  "logout": "登出",
+  "logoutTitle": "登出？",
+  "logoutDesc": "登出後需要重新輸入使用者名稱與密碼。",
+  "revoke": "撤銷全部工作階段",
+  "revokeTitle": "撤銷全部工作階段？",
+  "revokeDesc": "所有已簽發的登入 Cookie（含本機與其他裝置）立即失效，需要重新登入。",
+  "revokeHint": "懷疑會話洩漏時使用；不影響密碼與下游設定",
+  "revoked": "已撤銷全部工作階段",
+  "systemSettings": "偏好",
+  "quickLinks": "快捷連結",
+  "community": "社群",
+  "communityTitle": "linux.do 社群",
+  "uiReference": "UI 參考",
+  "help": "說明與設定",
+  "about": "關於",
+  "aboutDesc": "QCode Manager：面向 qoder2api 的 PAT 帳號池管理與 OpenAI 相容閘道面板。",
+  "versionFallback": "（建置號，執行版本以後端為準）",
+  "dockLabel": "底欄位置",
+  "dockPinned": "固定底部",
+  "dockFloating": "懸浮可拖動"
+}

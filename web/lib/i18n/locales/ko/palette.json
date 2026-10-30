@@ -1,1 +1,13 @@
-{}
+{
+  "trigger": "검색",
+  "triggerHint": "명령 팔레트 열기(Ctrl K)",
+  "title": "명령 팔레트",
+  "desc": "페이지 이름이나 경로를 입력하고 Enter로 이동합니다",
+  "placeholder": "페이지 검색(예: '계정', 'settings')…",
+  "empty": "일치하는 페이지가 없습니다",
+  "emptyHint": "다른 말로 검색하거나 메뉴 바 탐색을 이용하세요",
+  "hintMove": "이동",
+  "hintOpen": "열기",
+  "hintClose": "닫기",
+  "results": "{n}개"
+}

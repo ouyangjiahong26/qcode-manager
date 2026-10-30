@@ -5,6 +5,7 @@ import {useRouter} from 'next/navigation';
 import {ManagementBar} from '@/components/common/layout/ManagementBar';
 import {CommandPalette} from '@/components/common/layout/CommandPalette';
 import {LanguageToggle} from '@/components/common/layout/LanguageToggle';
+import {WhatsNewDialog} from '@/components/common/layout/WhatsNewDialog';
 import {useAuth} from '@/lib/auth-context';
 
 const MemoizedManagementBar = memo(ManagementBar);
@@ -38,6 +39,7 @@ export default function MainLayout({
               <div className="flex flex-wrap items-center justify-end gap-2">
                 <CommandPalette />
                 <LanguageToggle />
+                <WhatsNewDialog />
               </div>
               {children}
             </div>
