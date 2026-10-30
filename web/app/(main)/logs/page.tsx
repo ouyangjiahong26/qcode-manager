@@ -5,8 +5,10 @@ import {ScrollText, RotateCcw, Trash2, ChevronLeft, ChevronRight} from 'lucide-r
 import {useHeartbeat} from '@/lib/use-heartbeat';
 import {notify} from '@/lib/toast';
 import {keysApi} from '@/lib/api/keys';
-import {logsApi, errText} from '@/lib/api/logs';
+import {logsApi} from '@/lib/api/logs';
+import {errText} from '@/lib/api/http';
 import {useAsyncAll} from '@/lib/use-async-data';
+import {useDebounced} from '@/lib/use-debounce';
 import type {RequestLog} from '@/lib/types/logs';
 import type {ApiKey} from '@/lib/types/keys';
 import {fmtDateTime, fmtDateTimeMarked, fmtLatency, fmtNumber} from '@/lib/format';
@@ -39,6 +41,7 @@ import {
 import {
   Table,
   TableCell,
+  TableBody,
   TableHead,
   TableHeader,
   TableRow,

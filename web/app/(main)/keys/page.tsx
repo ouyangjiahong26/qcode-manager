@@ -5,8 +5,9 @@ import {KeyRound, Plus, Trash2, Pencil, RotateCcw} from 'lucide-react';
 import {useHeartbeat} from '@/lib/use-heartbeat';
 import {useAsyncAll} from '@/lib/use-async-data';
 import {notify} from '@/lib/toast';
-import {keysApi, errText} from '@/lib/api/keys';
-import type {ApiKey, KeyCreated, UpstreamOption} from '@/lib/types/keys';
+import {keysApi} from '@/lib/api/keys';
+import {errText} from '@/lib/api/http';
+import type {ApiKey, KeyCreated, UpstreamOption, KeyCreateInput, KeyPatchInput} from '@/lib/types/keys';
 import {fmtDateTime, fmtNumber} from '@/lib/format';
 import {BASE_PATH} from '@/lib/base-path';
 import {PageHeader} from '@/components/common/layout/PageHeader';
@@ -198,7 +199,7 @@ export default function KeysPage() {
     setBusy(true);
     try {
       const days = Number(form.expiresDays) || 0;
-      const payload: Record<string, unknown> = {
+      const payload: KeyCreateInput & KeyPatchInput = {
         name: form.name.trim(),
         max_ips: Number(form.maxIps) || 0,
         ip_allowlist: toLines(form.ipAllowlist),
