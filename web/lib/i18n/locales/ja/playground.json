@@ -1,0 +1,53 @@
+{
+  "playground": {
+    "title": "テスト環境",
+    "description": "ログインセッションで上流を直接試せます。API キーは不要です",
+    "unreadable": "読み取り可能なストリームがありませんでした",
+    "emptyAnswer": "（モデルが内容を返しませんでした）",
+    "stopped": "中断しました",
+    "modelsRefreshed": "モデル一覧を再取得しました",
+    "refreshModels": "モデルを更新",
+    "clearChat": "会話を消去",
+    "partialFailed": "一部のデータ更新に失敗しました。表示は少し前の内容の可能性があります",
+    "adminRequired": "管理者権限が必要です",
+    "adminRequiredDesc": "プレイグラウンドは実際にアカウントの呼び出しを消費します。管理者専用です",
+    "startTitle": "会話を始めましょう",
+    "startDesc": "何か入力すると選択中のモデルを試せます。回答はストリーミングで返ります",
+    "currentModel": "現在のモデル：",
+    "copyAnswer": "回答をコピー",
+    "tokensTitle": "この回答の実測 Token 消費",
+    "tokens": "{n} tokens",
+    "modelsAvailable": "選択できるモデル {n} 件",
+    "noModels": "利用できるモデルがありません",
+    "sessionTokensTitle": "このセッションの累計 Token 消費",
+    "sessionTokens": "{n} tokens",
+    "footnote1": "チャットはアカウントプールの PAT 経由で上流へ転送され、実際の呼び出しを消費します",
+    "footnote2": "呼び出しはログページに記録されます（キー列は「—」と表示）"
+  },
+  "chat": {
+    "ph1": "何か聞いてみて…",
+    "ph2": "モデルにコードを書かせてみて…",
+    "ph3": "モデルを変えて回答を比べてみて…",
+    "ph4": "Enter で送信、Shift+Enter で改行…",
+    "ph5": "上流の接続を確認したい？軽く雑談してみて…",
+    "send": "送信",
+    "stop": "生成を停止",
+    "selectModel": "モデルを選択",
+    "noModels": "利用できるモデルがありません",
+    "reasoningSuffix": " · 推論 {efforts}",
+    "effort": "思考の強さ",
+    "effortTitle": "推論レベルを選択",
+    "effortUnsupported": "このモデルは推論レベルを宣言していません",
+    "effortUnset": "指定しない",
+    "keyboardHint": "Enter で送信 · Shift+Enter で改行"
+  },
+  "effort": {
+    "off": "閉じる",
+    "minimal": "最小",
+    "low": "低",
+    "medium": "中",
+    "high": "高",
+    "xhigh": "非常に高い",
+    "max": "最大"
+  }
+}

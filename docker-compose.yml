@@ -1,0 +1,79 @@
+# QCode Manager —— Docker Compose 部署
+#
+# 两个服务：
+#   qcode-manager  本面板（FastAPI + 前端静态导出，容器内 7865）
+#   qoder2api      上游 Qoder 账号池 / OpenAI 兼容服务（容器内 8963，不出外网）
+#
+# 用法：
+#   1) 准备上游源码（二选一，详见 deploy/README.md）：
+#      a. git clone https://github.com/fengyinxia/qoder2api upstream/qoder2api
+#      b. 把 image: 换成你自备的 qoder2api 镜像并删掉 build: 段
+#   2) cp .env.example .env 按需修改（至少确认 QC_ADMIN_PASSWORD）
+#   3) docker compose up -d --build
+#      首次启动若未设 QC_ADMIN_PASSWORD，会随机生成密码并打印到容器日志：
+#      docker compose logs qcode-manager | grep -A2 密码
+#   4) 浏览器经反向代理访问 pm.<你的域名>（直连仅绑宿主回环 7865）
+
+services:
+  qcode-manager:
+    build:
+      context: .
+      args:
+        # 可选构建加速镜像（国内机器建议填写，否则构建先白等一轮官方源）
+        NPM_REGISTRY: ""
+        PIP_INDEX_URL: ""
+    image: qcode-manager:latest
+    container_name: qcode-manager
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Shanghai
+      # 上游在同一个 compose 网络里，直接用服务名（不要写 127.0.0.1——
+      # 那是容器自己）
+      QC2API_BASE: http://qoder2api:8963
+      # 首启管理员密码；不设则随机生成并打印到日志（首登后立即改）
+      # QC_ADMIN_PASSWORD: "改成你的强密码"
+      # 反代透传 X-Real-IP / X-Forwarded-For 时才采信这些头；nginx 在本机，
+      # 所以可信代理网段保持 127.0.0.1（详见 deploy/README.md）
+      QC_TRUST_PROXY: "1"
+      # 生产环境不暴露 /docs 与 /openapi.json
+      QC_ENABLE_DOCS: "0"
+      # 出口代理（可选）：写在同目录 .env 里，compose 用 ${} 取进来
+      QC_HTTP_PROXY: ${QC_HTTP_PROXY:-}
+      # 一键更新（可选）
+      QC_UPDATE_PROXY: ${QC_UPDATE_PROXY:-}
+      QC_GITHUB_TOKEN: ${QC_GITHUB_TOKEN:-}
+      QC_GITHUB_MIRROR: ${QC_GITHUB_MIRROR:-}
+    ports:
+      # 只绑宿主回环：公网访问一律经 nginx 反代（pm.<域名>），直接暴露
+      # 管理面是被打穿的常见入口
+      - "127.0.0.1:7865:7865"
+    volumes:
+      # 数据库、users.json、secret.key、日志、更新状态全在 data/。
+      # 必须持久化，否则重建容器丢全部账号与统计。
+      # **权限**：bind mount 属主由宿主决定，容器以 uid 10001 运行——
+      # 首次启动前在 compose 所在目录执行一次：
+      #   chown -R 10001:10001 ./data
+      # 网络文件系统上改不了属主时换命名卷（volumes: qcode-data:，挂 qcode-data:/app/data）
+      - ./data:/app/data
+    depends_on:
+      - qoder2api
+
+  qoder2api:
+    # 方式 a：本地构建 —— 先 clone 上游源码到 ./upstream/qoder2api
+    #   git clone https://github.com/fengyinxia/qoder2api upstream/qoder2api
+    build:
+      context: ./upstream/qoder2api
+    # 方式 b：自备镜像 —— 注释掉上面 build: 段，改用：
+    # image: your-registry/qoder2api:latest
+    image: qoder2api:latest
+    container_name: qoder2api
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Shanghai
+    # 不映射 ports：只在 compose 内网暴露给 qcode-manager，外面摸不到
+    expose:
+      - "8963"
+    volumes:
+      # 上游自己的账号数据持久化（目录名以 upstream/qoder2api 的 README 为准，
+      # 常见是 auths/ 与 data/；不确定时先只挂 ./upstream-data 一个目录再按需补）
+      - ./upstream-data:/app/data

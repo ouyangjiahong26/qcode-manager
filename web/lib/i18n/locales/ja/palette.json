@@ -1,0 +1,13 @@
+{
+  "trigger": "検索",
+  "triggerHint": "コマンドパレットを開く（Ctrl K）",
+  "title": "コマンドパレット",
+  "desc": "ページ名またはパスを入力して Enter で移動します",
+  "placeholder": "ページを検索（例:「アカウント」「settings」）…",
+  "empty": "一致するページがありません",
+  "emptyHint": "言い換えてみるか、メニューバーのナビゲーションをご利用ください",
+  "hintMove": "移動",
+  "hintOpen": "開く",
+  "hintClose": "閉じる",
+  "results": "{n} 件"
+}

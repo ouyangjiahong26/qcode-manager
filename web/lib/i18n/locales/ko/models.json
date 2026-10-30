@@ -1,0 +1,29 @@
+{
+  "models": {
+    "title": "모델",
+    "description": "업스트림 모델 카탈로그",
+    "refetch": "강제 새로고침",
+    "refetchTitle": "캐시를 우회해 다시 가져옵니다. 실제 업스트림 호출 1회가 소모됩니다",
+    "refetching": "모델 목록을 다시 가져오는 중…",
+    "refetchDone": "모델 목록을 갱신했습니다",
+    "refetchDoneHint": "캐시를 우회해 업스트림 카탈로그를 다시 가져왔습니다",
+    "refetchFailed": "모델 목록 가져오기 실패",
+    "refetchFailedHint": "업스트림이나 계정 풀을 사용할 수 없는 것 같습니다. 나중에 다시 시도하세요",
+    "statTotal": "모델 총수",
+    "statTotalHint": "현재 업스트림 /v1/models가 반환한 목록",
+    "statOwners": "제공자",
+    "statOwnersHint": "목록이 같은 제공자에서 옵니다",
+    "statOwnersHintMulti": "owned_by 기준 중복 제거 후 집계",
+    "statNewest": "최근 추가",
+    "statNewestHint": "목록에서 created가 가장 최근인 모델",
+    "searchPlaceholder": "모델 ID 또는 제공자 검색…",
+    "colId": "모델 ID",
+    "colOwner": "제공자",
+    "colObject": "유형",
+    "colCreated": "등록 시각",
+    "emptyTitle": "모델이 없습니다",
+    "emptyDesc": "업스트림 카탈로그가 비어 있습니다: 계정 풀에 사용 가능한 PAT가 있고 업스트림 서비스가 정상인지 확인하세요",
+    "noMatchTitle": "일치하는 모델이 없습니다",
+    "noMatchDesc": "'{q}'가 포함된 모델이 없습니다. 다른 키워드로 검색해 보세요"
+  }
+}

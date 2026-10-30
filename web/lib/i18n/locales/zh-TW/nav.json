@@ -1,0 +1,18 @@
+{
+  "sectionTabs": "頁內導覽",
+  "dashboard": "儀表板",
+  "accounts": "帳號池",
+  "keys": "金鑰",
+  "models": "模型",
+  "playground": "測試台",
+  "stats": "統計",
+  "logs": "日誌",
+  "security": "安全",
+  "settings": "設定",
+  "quickAdd": "新增帳號",
+  "quickAddSoon": "帳號納管（貼上 PAT）功能待接入，請先在帳號頁管理。",
+  "profile": "個人資訊",
+  "groupOverview": "總覽",
+  "groupOps": "營運",
+  "groupGovernance": "治理"
+}

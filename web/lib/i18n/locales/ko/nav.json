@@ -1,0 +1,18 @@
+{
+  "sectionTabs": "페이지 내 탐색",
+  "dashboard": "대시보드",
+  "accounts": "계정 풀",
+  "keys": "키",
+  "models": "모델",
+  "playground": "테스트 환경",
+  "stats": "통계",
+  "logs": "로그",
+  "security": "보안",
+  "settings": "설정",
+  "quickAdd": "계정 추가",
+  "quickAddSoon": "계정 등록(PAT 붙여넣기) 기능은 준비 중입니다. 현재는 계정 페이지에서 관리하세요.",
+  "profile": "프로필",
+  "groupOverview": "개요",
+  "groupOps": "운영",
+  "groupGovernance": "거버넌스"
+}

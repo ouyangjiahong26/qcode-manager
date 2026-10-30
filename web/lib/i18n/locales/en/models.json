@@ -1,0 +1,29 @@
+{
+  "models": {
+    "title": "Models",
+    "description": "Upstream model catalog",
+    "refetch": "Force refresh",
+    "refetchTitle": "Re-fetch bypassing the cache; consumes one real upstream call",
+    "refetching": "Refetching the model list…",
+    "refetchDone": "The model list has been updated",
+    "refetchDoneHint": "Upstream catalog re-fetched, bypassing the cache",
+    "refetchFailed": "Failed to fetch model list",
+    "refetchFailedHint": "The upstream or account pool may be unavailable; try again later",
+    "statTotal": "Total models",
+    "statTotalHint": "Catalog returned by the upstream /v1/models",
+    "statOwners": "Providers",
+    "statOwnersHint": "Catalog comes from a single provider",
+    "statOwnersHintMulti": "Counted after dedup by owned_by",
+    "statNewest": "Newest",
+    "statNewestHint": "Model with the newest `created` in the catalog",
+    "searchPlaceholder": "Search model id or provider…",
+    "colId": "Model ID",
+    "colOwner": "Provider",
+    "colObject": "Type",
+    "colCreated": "Listed at",
+    "emptyTitle": "No models",
+    "emptyDesc": "Upstream catalog is empty: make sure the account pool has a working PAT and the upstream service is healthy",
+    "noMatchTitle": "No matching models",
+    "noMatchDesc": "No models contain “{q}”; try another keyword"
+  }
+}

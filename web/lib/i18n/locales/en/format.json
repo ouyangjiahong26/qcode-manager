@@ -1,0 +1,15 @@
+{
+  "expired": "expired",
+  "permanent": "Permanent",
+  "seconds": "{n}s",
+  "minutes": "{n}m",
+  "hours": "{n}h",
+  "days": "{n}d",
+  "yesterday": "yesterday",
+  "never": "never",
+  "justNow": "just now",
+  "secondsAgo": "{n}s ago",
+  "minutesAgo": "{n}m ago",
+  "hoursAgo": "{n}h ago",
+  "daysAgo": "{n}d ago"
+}

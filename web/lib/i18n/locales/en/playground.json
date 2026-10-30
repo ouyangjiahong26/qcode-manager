@@ -1,0 +1,53 @@
+{
+  "playground": {
+    "title": "Playground",
+    "description": "Try the upstream directly with your login session — no API key needed",
+    "unreadable": "The response had no readable stream",
+    "emptyAnswer": "(the model returned no content)",
+    "stopped": "Stopped",
+    "modelsRefreshed": "Model list re-fetched",
+    "refreshModels": "Refresh models",
+    "clearChat": "Clear chat",
+    "partialFailed": "Some data failed to refresh; what is shown may be slightly stale",
+    "adminRequired": "Administrator required",
+    "adminRequiredDesc": "The playground consumes real account calls; admins only",
+    "startTitle": "Start a conversation",
+    "startDesc": "Type anything to try the selected model; replies stream back",
+    "currentModel": "Current model:",
+    "copyAnswer": "Copy answer",
+    "tokensTitle": "Measured token cost of this reply",
+    "tokens": "{n} tokens",
+    "modelsAvailable": "{n} models available",
+    "noModels": "No models available",
+    "sessionTokensTitle": "Cumulative token cost of this session",
+    "sessionTokens": "{n} tokens",
+    "footnote1": "Chats are forwarded to the upstream via a PAT from the account pool and consume real calls",
+    "footnote2": "Calls appear on the Logs page (the key column shows “—”)"
+  },
+  "chat": {
+    "ph1": "Ask something…",
+    "ph2": "Try asking the model to write some code…",
+    "ph3": "Switch models to compare answers…",
+    "ph4": "Enter to send, Shift+Enter for a new line…",
+    "ph5": "Testing upstream connectivity? Just chat…",
+    "send": "Send",
+    "stop": "Stop generating",
+    "selectModel": "Select model",
+    "noModels": "No models available",
+    "reasoningSuffix": " · reasoning {efforts}",
+    "effort": "Effort",
+    "effortTitle": "Reasoning effort",
+    "effortUnsupported": "This model does not declare reasoning effort",
+    "effortUnset": "Unspecified",
+    "keyboardHint": "Enter to send · Shift+Enter for a new line"
+  },
+  "effort": {
+    "off": "Close",
+    "minimal": "Minimal",
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "xhigh": "Extra high",
+    "max": "Max"
+  }
+}

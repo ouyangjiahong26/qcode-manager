@@ -1,0 +1,5 @@
+{
+  "forbidden": "Permission denied",
+  "crashTitle": "Something went wrong",
+  "crashHint": "A rendering error occurred. You can retry, or refresh the whole page and retry."
+}

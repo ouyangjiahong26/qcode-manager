@@ -1,0 +1,11 @@
+{
+  "subtitle": "Qoder PAT account-pool console and gateway panel",
+  "username": "Username",
+  "password": "Password",
+  "passwordPlaceholder": "Enter your password",
+  "emptySubmit": "No input received: make sure username and password are filled in (browser autofill may not be recognized — type them once manually)",
+  "expiredHint": "Your session has expired. Please sign in again.",
+  "initialPwdHint": "Forgot the password? The initial password is printed once in the server log on first startup.",
+  "submit": "Sign in",
+  "legal": "For personal learning and internal use only; please follow the upstream terms of service"
+}

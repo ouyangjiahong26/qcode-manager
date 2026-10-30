@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+*.egg-info/
+
+# 前端
+web/node_modules/
+web/.next/
+web/out/
+web/tsconfig.tsbuildinfo
+web/.env
+web/.env.local
+
+# 运行数据（含密钥与账号，绝不入库）
+data/
+!data/.gitkeep
+
+# 环境与密钥
+.env
+*.db
+*.db-wal
+*.db-shm
+initial-admin-password.txt
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

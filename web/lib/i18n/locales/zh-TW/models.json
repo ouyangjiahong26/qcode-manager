@@ -1,0 +1,29 @@
+{
+  "models": {
+    "title": "模型",
+    "description": "上游模型目錄",
+    "refetch": "強制刷新",
+    "refetchTitle": "繞過快取重新拉取，會真實消耗一次上游呼叫",
+    "refetching": "正在重新拉取模型清單…",
+    "refetchDone": "模型清單已更新",
+    "refetchDoneHint": "已繞過快取重新拉取上游清單",
+    "refetchFailed": "模型列表拉取失敗",
+    "refetchFailedHint": "上游或帳號池可能不可用，可稍後再試",
+    "statTotal": "模型總數",
+    "statTotalHint": "目前上游 /v1/models 回傳的清單",
+    "statOwners": "提供方",
+    "statOwnersHint": "清單來自同一提供方",
+    "statOwnersHintMulti": "按 owned_by 去重統計",
+    "statNewest": "最近上架",
+    "statNewestHint": "清單中 created 最新的模型",
+    "searchPlaceholder": "搜尋模型 ID 或提供方…",
+    "colId": "模型 ID",
+    "colOwner": "提供方",
+    "colObject": "類型",
+    "colCreated": "上架時間",
+    "emptyTitle": "暫無模型",
+    "emptyDesc": "上游清單為空：請確認帳號池裡有可用 PAT，且上游服務正常",
+    "noMatchTitle": "沒有符合的模型",
+    "noMatchDesc": "沒有找到包含「{q}」的模型，換個關鍵詞試試"
+  }
+}
