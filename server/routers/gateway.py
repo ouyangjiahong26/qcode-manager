@@ -8,7 +8,7 @@ import time
 from urllib.parse import urlsplit
 
 from fastapi import APIRouter, Request
-from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.responses import JSONResponse, Response, StreamingResponse
 
 from .. import config, db, iputil, keysvc
 
@@ -568,6 +568,30 @@ async def _forward_chat(upstream: dict, pat: str, payload: dict, *,
             return JSONResponse(payload_out, status_code=status_code)
         return JSONResponse({'error': {'message': text[:1000], 'type': 'api_error'}},
                             status_code=status_code)
+
+    # 非流式：上游回的是普通 JSON completion，SSE 扫描器只认 `data:` 帧、
+    # 从里面永远提不出 usage —— 必须单独解析，否则 request_logs 的 token 数
+    # 恒为 0、usage_daily 不累计、按 token 的配额也不扣减。
+    content_type = resp.headers.get('content-type', '')
+    if not payload.get('stream') and 'text/event-stream' not in content_type:
+        raw = await resp.aread()
+        await resp.aclose()
+        await client.aclose()
+        usage_ns: dict = {}
+        data_ns = None
+        try:
+            data_ns = json.loads(raw.decode('utf-8', errors='replace'))
+        except Exception:  # noqa: BLE001
+            data_ns = None
+        if isinstance(data_ns, dict) and isinstance(data_ns.get('usage'), dict):
+            usage_ns = data_ns['usage']
+        if on_finish:
+            await on_finish(status_code, usage_ns, None,
+                            int((time.time() - started) * 1000), None)
+        if data_ns is not None:
+            return JSONResponse(data_ns, status_code=status_code)
+        return Response(content=raw, status_code=status_code,
+                        media_type=content_type or 'application/json')
 
     async def generator():
         usage: dict = {}

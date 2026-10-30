@@ -182,8 +182,14 @@ class Probe(UpstreamTestCase):
 
 # ── settings 片（model-map / users）：依赖 security，未就绪则整组跳过 ──
 try:
-    from server.routers import settings as settings_router  # noqa: E402
-    from server import security  # noqa: E402
+    from server.routers import settings as settings_router  # noqa: E402,F401
+    # test_stats 会往 sys.modules 塞一个只替身化 audit 的 server.security，
+    # 同进程 discover 时 `from server import security` 可能拿到那份替身。
+    # 这里按文件位置重新加载一份真实模块，绑定不受替身污染。
+    import importlib.util
+    _spec = importlib.util.find_spec('server.security')
+    security = importlib.util.module_from_spec(_spec)
+    _spec.loader.exec_module(security)
     _SETTINGS_READY = True
 except Exception:  # noqa: BLE001 —— security 片未就绪属并行开发的预期状态
     _SETTINGS_READY = False
@@ -228,17 +234,12 @@ class UsersFlow(UpstreamTestCase):
         super().tearDown()
 
     def _seed(self) -> dict:
-        cfg = {'users': [{
+        cfg = {'secret': config.new_secret(), 'users': [{
             'username': 'admin', 'role': 'admin',
             'pwd_hash': security.make_hash('AdminPass123!'), 'sv': 5,
         }]}
         security.save_users(cfg)
         return cfg
-
-    def test_password_policy_gates_weak_pw(self) -> None:
-        # 与路由同一判据：弱口令在建用户 / 改密码两处都必须被拦下
-        self.assertTrue(security.password_problem('123', 'admin'))
-        self.assertTrue(security.password_problem('adminadmin', 'admin'))
 
     def test_change_password_revokes_via_sv(self) -> None:
         cfg = self._seed()
@@ -249,6 +250,12 @@ class UsersFlow(UpstreamTestCase):
         loaded = security.load_users()
         self.assertEqual(loaded['users'][0]['sv'], 6)
         self.assertTrue(security.verify_pwd('NewPass456!', loaded['users'][0]['pwd_hash']))
+
+    def test_password_policy_gates_weak_pw(self) -> None:
+        # 与路由同一判据：弱口令在建用户 / 改密码两处都必须被拦下
+        self.assertTrue(security.password_problem('123', 'admin'))
+        self.assertTrue(security.password_problem('adminadmin', 'admin'))
+        self.assertFalse(security.password_problem('Xk9#mQ2$vLp7', 'admin'))
 
 
 if __name__ == '__main__':
