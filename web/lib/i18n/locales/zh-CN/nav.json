@@ -1,0 +1,18 @@
+{
+  "sectionTabs": "页内导航",
+  "dashboard": "仪表盘",
+  "accounts": "账号池",
+  "keys": "密钥",
+  "models": "模型",
+  "playground": "测试台",
+  "stats": "统计",
+  "logs": "日志",
+  "security": "安全",
+  "settings": "设置",
+  "quickAdd": "添加账号",
+  "quickAddSoon": "账号纳管（粘贴 PAT）功能待接入，请先在账号页管理。",
+  "profile": "个人信息",
+  "groupOverview": "总览",
+  "groupOps": "运营",
+  "groupGovernance": "治理"
+}

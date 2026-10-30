@@ -1,0 +1,11 @@
+{
+  "subtitle": "Qoder PAT 账号池管理与网关面板",
+  "username": "用户名",
+  "password": "密码",
+  "passwordPlaceholder": "请输入密码",
+  "emptySubmit": "没有读到输入内容：请确认用户名与密码已填写（浏览器自动填充可能未被识别，可手动补输一次）",
+  "expiredHint": "会话已过期，请重新登录",
+  "initialPwdHint": "忘记密码？初始密码在服务端首次启动日志中打印一次。",
+  "submit": "登录",
+  "legal": "仅供个人学习与内部使用，请遵守上游服务条款"
+}

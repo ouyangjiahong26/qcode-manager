@@ -1,0 +1,13 @@
+{
+  "trigger": "搜索",
+  "triggerHint": "打开命令面板（Ctrl K）",
+  "title": "命令面板",
+  "desc": "输入页面名称或路径，回车跳转",
+  "placeholder": "搜索页面，例如「账号」「settings」…",
+  "empty": "没有匹配的页面",
+  "emptyHint": "换个说法试试，或直接走底栏导航",
+  "hintMove": "移动",
+  "hintOpen": "打开",
+  "hintClose": "关闭",
+  "results": "{n} 条结果"
+}

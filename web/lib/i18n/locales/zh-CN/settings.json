@@ -1,0 +1,12 @@
+{
+  "title": "设置",
+  "desc": "面板与网关的全部配置",
+  "tabUpstream": "上游分组",
+  "tabModels": "模型映射",
+  "tabUsers": "用户",
+  "tabTokens": "API 令牌",
+  "tabSystem": "系统更新",
+  "tabBackup": "数据备份",
+  "tabChangelog": "更新日志",
+  "tabAbout": "关于"
+}
