@@ -19,7 +19,7 @@ import {
 } from '@/components/animate-ui/radix/dialog';
 import {ScrollArea} from '@/components/ui/scroll-area';
 
-const STORAGE_KEY = 'qcode-manager:whats-new';
+const STORAGE_KEY = 'qcoder-manager:whats-new';
 
 export function WhatsNewDialog() {
   const t = useT();

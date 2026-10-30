@@ -243,7 +243,7 @@ export function PgSyncPanel() {
               id="pg-db"
               value={form.dbname}
               disabled={!isAdmin}
-              placeholder="qcode"
+              placeholder="qcoder"
               onChange={(e) => patch({dbname: e.target.value})}
             />
             <p className="mt-1 text-xs text-muted-foreground">{t('settings.pgDbnameHint')}</p>

@@ -43,8 +43,8 @@ http.interceptors.response.use(
       // 会话失效：清掉缓存的登录态，避免仍显示管理员入口。
       // `hadSession` 决定要不要说「会话已过期」：首次访问本来就没有会话，
       // 那是「请登录」而不是「过期了」（用户会以为面板坏了）。
-      const hadSession = !!window.sessionStorage.getItem('qcode-manager:me');
-      window.sessionStorage.removeItem('qcode-manager:me');
+      const hadSession = !!window.sessionStorage.getItem('qcoder-manager:me');
+      window.sessionStorage.removeItem('qcoder-manager:me');
       const path = window.location.pathname;
       const loginPath = `${BASE_PATH}/login`;
       // 根路径只是「跳到 /dashboard」的中转页，不在这里拦（否则首次访问者

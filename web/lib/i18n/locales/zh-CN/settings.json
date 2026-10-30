@@ -182,7 +182,7 @@
   "updAutoSavedOn": "已开启自动更新",
   "updAutoSavedOff": "已关闭自动更新",
   "updPkgTitle": "离线升级包",
-  "updPkgDesc": "给拿不到 GitHub 的机器用：从发布页下载 `qcode-manager-vX.Y.Z.tar.gz`，在这里上传，然后用它更新（**不走网络**）。上传时会校验它是不是本项目的发布包，并核对发布页 sha256。",
+  "updPkgDesc": "给拿不到 GitHub 的机器用：从发布页下载 `qcoder-manager-vX.Y.Z.tar.gz`，在这里上传，然后用它更新（**不走网络**）。上传时会校验它是不是本项目的发布包，并核对发布页 sha256。",
   "updPkgFile": "发布包文件",
   "updPkgShaLabel": "发布页 sha256（必填）",
   "updPkgShaPlaceholder": "粘贴发布说明里的 64 位摘要",
@@ -274,6 +274,6 @@
   "aboutVersion": "版本",
   "aboutBuildTime": "构建时间",
   "aboutRepo": "仓库",
-  "aboutDesc": "QCode Manager 为 Qoder → OpenAI 兼容代理提供网页管理界面与对外接口网关：PAT 账号池纳管、多上游分组、密钥分发、IP 管控、请求日志与用量统计。",
+  "aboutDesc": "QCoder Manager 为 Qoder → OpenAI 兼容代理提供网页管理界面与对外接口网关：PAT 账号池纳管、多上游分组、密钥分发、IP 管控、请求日志与用量统计。",
   "aboutUsage": "下游接入：Base URL 填 `https://你的域名/v1`，密钥用「API 密钥」页生成的 `qk_...`。"
 }

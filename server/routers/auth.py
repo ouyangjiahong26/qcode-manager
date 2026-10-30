@@ -9,7 +9,7 @@ from fastapi.responses import JSONResponse
 from .. import config, security
 from ..iputil import client_ip
 
-logger = logging.getLogger('qcode.auth')
+logger = logging.getLogger('qcoder.auth')
 
 router = APIRouter(prefix='/api', tags=['auth'])
 
@@ -25,7 +25,7 @@ async def healthz() -> dict:
         upstream = {'ok': ok, 'error': '' if ok else msg}
     except Exception as exc:  # noqa: BLE001
         upstream = {'ok': False, 'error': str(exc)}
-    return {'ok': True, 'service': 'qcode-manager', 'upstream': upstream}
+    return {'ok': True, 'service': 'qcoder-manager', 'upstream': upstream}
 
 
 @router.post('/login')

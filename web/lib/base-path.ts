@@ -2,8 +2,8 @@
  * 部署基础路径（basePath）。
  *
  * 默认部署在域名根路径，此时该值为空串，所有路径与改动前完全一致。
- * 需要挂到子路径时（如 `https://example.com/qcode-manager/`），在**构建前端
- * 产物时**设置 `NEXT_PUBLIC_BASE_PATH=/qcode-manager`，并让反向代理把该前缀
+ * 需要挂到子路径时（如 `https://example.com/qcoder-manager/`），在**构建前端
+ * 产物时**设置 `NEXT_PUBLIC_BASE_PATH=/qcoder-manager`，并让反向代理把该前缀
  * 剥掉再转发给本服务（见 deploy/README.md「子路径部署」）。
  *
  * 为什么不能只依赖 Next.js 的 `basePath`：它只自动改写 `next/link`、

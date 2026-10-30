@@ -38,7 +38,7 @@ STATIC_DIR = Path(_env('QC_STATIC_DIR', str(ROOT / 'web' / 'out')))
 
 # 子路径部署时的 URL 前缀，留空 = 根路径部署（默认）。
 #
-# 反向代理把 `/qcode-manager/...` 剥掉前缀再转发给本服务，所以路由本身不需要
+# 反向代理把 `/qcoder-manager/...` 剥掉前缀再转发给本服务，所以路由本身不需要
 # 感知前缀；但**服务端主动发出的绝对地址**（如 RSC 兜底重定向的 Location）会
 # 漏掉它，浏览器跟过去就落到域名根上。该值须与前端构建时的
 # `NEXT_PUBLIC_BASE_PATH` 保持一致。

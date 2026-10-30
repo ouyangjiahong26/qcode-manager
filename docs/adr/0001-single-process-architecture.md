@@ -5,7 +5,7 @@
 
 ## 背景
 
-qcode-manager 仿照 workbuddy-manager（源仓库 `~/codes/workbuddy-manager`）构建。需要确定进程模型、技术栈与部署形态。
+qcoder-manager 仿照 workbuddy-manager（源仓库 `~/codes/workbuddy-manager`）构建。需要确定进程模型、技术栈与部署形态。
 
 ## 决策
 

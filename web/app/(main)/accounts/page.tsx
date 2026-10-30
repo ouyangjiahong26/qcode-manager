@@ -5,7 +5,7 @@
  *
  * 数据流：useAsyncAll 并发取「当前范围的账号列表 + 全部分组清单」，30s 心跳
  * 刷新（refresh 模式不清屏）；增删改由各弹窗完成后调 reload，并广播
- * 'qcode-manager:accounts-changed'（仪表盘等页面据此同步自己的计数）。
+ * 'qcoder-manager:accounts-changed'（仪表盘等页面据此同步自己的计数）。
  *
  * 分组过滤的口径：后端 list 端点只支持「按具名上游过滤」，「默认分组」
  * （upstream_id 为空）没有服务端过滤参数——所以「全部 / 默认」两个 Tab 都拉
@@ -88,8 +88,8 @@ export default function AccountsPage() {
   // 其他页面（如仪表盘）改了账号池时同步刷新本页
   useEffect(() => {
     const onChanged = () => void reload();
-    window.addEventListener('qcode-manager:accounts-changed', onChanged);
-    return () => window.removeEventListener('qcode-manager:accounts-changed', onChanged);
+    window.addEventListener('qcoder-manager:accounts-changed', onChanged);
+    return () => window.removeEventListener('qcoder-manager:accounts-changed', onChanged);
   }, [reload]);
 
   const upstreams: Upstream[] = values.upstreams ?? [];
@@ -131,7 +131,7 @@ export default function AccountsPage() {
   async function removeAccount(account: Account) {
     await accountsApi.remove(account.id);
     notify.ok(t('accounts.removed', {name: account.label}));
-    window.dispatchEvent(new Event('qcode-manager:accounts-changed'));
+    window.dispatchEvent(new Event('qcoder-manager:accounts-changed'));
     void reload();
   }
 
@@ -142,7 +142,7 @@ export default function AccountsPage() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `qcode-accounts-${new Date().toISOString().slice(0, 10)}.json`;
+      a.download = `qcoder-accounts-${new Date().toISOString().slice(0, 10)}.json`;
       a.click();
       URL.revokeObjectURL(url);
       notify.ok(t('accounts.exportDone', {count: String(data.accounts.length)}));
@@ -359,7 +359,7 @@ export default function AccountsPage() {
         open={moveAccount != null}
         onOpenChange={(v) => { if (!v) setMoveAccount(null); }}
         onMoved={() => {
-          window.dispatchEvent(new Event('qcode-manager:accounts-changed'));
+          window.dispatchEvent(new Event('qcoder-manager:accounts-changed'));
           void reload();
         }}
       />

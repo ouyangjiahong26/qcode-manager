@@ -62,10 +62,10 @@ from .stdio_utf8 import force_utf8_stdio
 
 logger = logging.getLogger(__name__)
 
-USER_AGENT = 'qcode-manager-updater'
+USER_AGENT = 'qcoder-manager-updater'
 
 # 面板自己的仓库（owner/name），用于查询最新 Release；可用环境变量覆盖。
-MANAGER_REPO = os.environ.get('QC_MANAGER_REPO') or 'fengyinxia/qcode-manager'
+MANAGER_REPO = os.environ.get('QC_MANAGER_REPO') or 'ouyangjiahong26/qcoder-manager'
 
 # worker 的安装目录。面板拉起 worker 时显式传 QC_INSTALL_DIR，两边不会各说各话。
 INSTALL_DIR = Path(os.environ.get('QC_INSTALL_DIR') or config.ROOT)
@@ -1038,7 +1038,7 @@ def start_update(*, source: str = 'release') -> tuple[bool, str]:
         # worker 结束面板进程后由替补进程按同一条命令重启（见 _restart_panel）
         'QC_PANEL_PID': str(os.getpid()),
         'QC_PANEL_ARGV': json.dumps(sys.argv),
-        'QC_SERVICE_NAME': os.environ.get('QC_SERVICE_NAME', 'qcode-manager'),
+        'QC_SERVICE_NAME': os.environ.get('QC_SERVICE_NAME', 'qcoder-manager'),
         # 子进程 stdio 与默认编码强制 UTF-8：中文 Windows 上重定向 stdout 的
         # 默认编码是 cp936（GBK），print('✓'/'⚠️') 会 UnicodeEncodeError 直接
         # 杀死更新进程。
@@ -1396,7 +1396,7 @@ def fetch_release_via_redirect() -> dict:
 
     API 未认证限额只有 60 次/小时/IP，共享出口极易被同出口用户打满，表现为
     偶发 HTTP 403；而 github.com 的网页端与 releases/download 资产下载不受该
-    配额限制。资产名按发布惯例 `qcode-manager-<tag>.tar.gz` 构造。
+    配额限制。资产名按发布惯例 `qcoder-manager-<tag>.tar.gz` 构造。
 
     **这条路径不走镜像**：gh-proxy 一类加速服务只放行资源下载，对网页正文
     直接返回 403。镜像模式下的主路径是 API，只有 API 完全不可用时才落到这里，
@@ -1404,7 +1404,7 @@ def fetch_release_via_redirect() -> dict:
     """
     tag = _latest_tag_via_redirect(MANAGER_REPO)
     base = f'https://github.com/{MANAGER_REPO}/releases/download/{tag}'
-    pkg_name = f'qcode-manager-{tag}.tar.gz'
+    pkg_name = f'qcoder-manager-{tag}.tar.gz'
     # 这条路径拿不到资产的 sha256（只有重定向里的 tag），下载后只校验完整性、
     # 并把本地摘要打进日志供人工比对 —— 见 verify_download。
     return {
@@ -1694,7 +1694,7 @@ def _restart_panel(rep: _WorkerReporter) -> None:
         return
 
     if os.name != 'nt':
-        service = os.environ.get('QC_SERVICE_NAME') or 'qcode-manager'
+        service = os.environ.get('QC_SERVICE_NAME') or 'qcoder-manager'
         have_systemctl = shutil.which('systemctl') is not None
         if mode == 'systemd' or (mode == 'auto' and have_systemctl):
             code, _ = _run(['systemctl', 'restart', service], rep=rep, check=False)
@@ -1858,7 +1858,7 @@ def _run_relaunch(pid: int) -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description='QCode Manager 更新')
+    parser = argparse.ArgumentParser(description='QCoder Manager 更新')
     parser.add_argument('--worker', action='store_true', help='作为更新 worker 运行')
     parser.add_argument('--source', choices=['release', 'uploaded'], default='release',
                         help='更新包来源：GitHub Release 或面板上传的离线包')
@@ -1885,7 +1885,7 @@ AUTO_STATE_KEY = 'auto_update_state'
 
 MIN_INTERVAL_HOURS = 1
 MAX_INTERVAL_HOURS = 7 * 24
-# qcode 只更新面板自身，没有上游容器可连着一起更新
+# qcoder 只更新面板自身，没有上游容器可连着一起更新
 TARGETS = ('manager',)
 
 # 同一版本自动更新失败后，多久内不再自动重试
@@ -1917,7 +1917,7 @@ def default_config() -> dict:
         # 默认凌晨 3 点到 6 点（服务器本地时间）才动手：避开白天的请求高峰
         'window_start': 3,
         'window_end': 6,
-        # qcode 只有面板一个更新对象
+        # qcoder 只有面板一个更新对象
         'target': 'manager',
     }
 

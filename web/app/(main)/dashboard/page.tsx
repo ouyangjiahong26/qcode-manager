@@ -59,8 +59,8 @@ export default function DashboardPage() {
   // 账号页改了账号池时同步刷新本页的计数卡片
   useEffect(() => {
     const onChanged = () => void reload();
-    window.addEventListener('qcode-manager:accounts-changed', onChanged);
-    return () => window.removeEventListener('qcode-manager:accounts-changed', onChanged);
+    window.addEventListener('qcoder-manager:accounts-changed', onChanged);
+    return () => window.removeEventListener('qcoder-manager:accounts-changed', onChanged);
   }, [reload]);
 
   if (isInitialLoading) {

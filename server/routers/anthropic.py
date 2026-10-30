@@ -45,7 +45,7 @@ from .. import config, iputil
 # 需要在网关与账号池尚未装配时即可独立导入做单测；它们只在端点处理器里用到。
 from . import responses
 
-logger = logging.getLogger('qcode.anthropic')
+logger = logging.getLogger('qcoder.anthropic')
 
 router = APIRouter(tags=['anthropic'])
 

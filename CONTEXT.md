@@ -1,6 +1,6 @@
 # CONTEXT.md
 
-qcode-manager 是面向 [fengyinxia/qoder2api](https://github.com/fengyinxia/qoder2api) 的 Web 管理控制台与 OpenAI 兼容网关，架构仿照 workbuddy-manager（位于 `~/codes/workbuddy-manager`，称源仓库）。
+qcoder-manager 是面向 [fengyinxia/qoder2api](https://github.com/fengyinxia/qoder2api) 的 Web 管理控制台与 OpenAI 兼容网关，架构仿照 workbuddy-manager（位于 `~/codes/workbuddy-manager`，称源仓库）。
 
 ## 系统边界
 
@@ -9,7 +9,7 @@ qcode-manager 是面向 [fengyinxia/qoder2api](https://github.com/fengyinxia/qod
         │  Authorization: Bearer qk_xxx（网关密钥）
         ▼
 ┌────────────────────────────────────┐
-│ qcode-manager            :7865     │
+│ qcoder-manager            :7865     │
 │ 网关 /v1/*（鉴权→IP管控→模型映射   │
 │ →PAT 轮询→流式转发→日志用量落库）   │
 │ 管理面 /api/*（登录/账号/密钥/日志）│

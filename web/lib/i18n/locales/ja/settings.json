@@ -176,7 +176,7 @@
   "updAutoSavedOn": "自動更新をオンにしました",
   "updAutoSavedOff": "自動更新をオフにしました",
   "updPkgTitle": "オフライン更新パッケージ",
-  "updPkgDesc": "GitHub に届かないマシン向け：リリースページから `qcode-manager-vX.Y.Z.tar.gz` をダウンロードし、ここへアップロードして更新します（**ネットワークは使いません**）。アップロード時に本プロジェクトのリリースパッケージか検証され、リリースページの sha256 と照合されます。",
+  "updPkgDesc": "GitHub に届かないマシン向け：リリースページから `qcoder-manager-vX.Y.Z.tar.gz` をダウンロードし、ここへアップロードして更新します（**ネットワークは使いません**）。アップロード時に本プロジェクトのリリースパッケージか検証され、リリースページの sha256 と照合されます。",
   "updPkgFile": "パッケージファイル",
   "updPkgShaLabel": "リリースページの sha256（必須）",
   "updPkgShaPlaceholder": "リリースノートの 64 文字のダイジェストを貼り付け",
@@ -265,6 +265,6 @@
   "aboutVersion": "エディション",
   "aboutBuildTime": "ビルド時刻",
   "aboutRepo": "リポジトリ",
-  "aboutDesc": "QCode Manager は Qoder → OpenAI 互換プロキシ向けに、Web 管理画面と対外 API ゲートウェイを提供します：PAT アカウントプールの取り込み、マルチアップストリームのグループ化、キー配布、IP 制御、リクエストログ、使用量統計。",
+  "aboutDesc": "QCoder Manager は Qoder → OpenAI 互換プロキシ向けに、Web 管理画面と対外 API ゲートウェイを提供します：PAT アカウントプールの取り込み、マルチアップストリームのグループ化、キー配布、IP 制御、リクエストログ、使用量統計。",
   "aboutUsage": "下流の接続：Base URL に `https://あなたのドメイン/v1` を指定し、キーには「API キー」ページで生成した `qk_...` を使います。"
 }

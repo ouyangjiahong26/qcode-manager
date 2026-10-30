@@ -47,7 +47,7 @@ from fastapi.responses import JSONResponse, StreamingResponse
 # 转换器是纯函数，需要在网关尚未装配时即可独立导入做单测。
 from .. import config
 
-logger = logging.getLogger('qcode.responses')
+logger = logging.getLogger('qcoder.responses')
 
 router = APIRouter(tags=['responses'])
 

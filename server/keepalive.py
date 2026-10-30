@@ -14,7 +14,7 @@ import time
 
 from . import accountsvc, db
 
-logger = logging.getLogger('qcode.keepalive')
+logger = logging.getLogger('qcoder.keepalive')
 
 _KEY = 'keepalive'
 _DEFAULTS = {'enabled': False, 'times': ['08:00'], 'timeout': 15}

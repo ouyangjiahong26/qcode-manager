@@ -18,7 +18,7 @@
   "uiReference": "UI reference",
   "help": "Help & settings",
   "about": "About",
-  "aboutDesc": "QCode Manager: a PAT account-pool management and OpenAI-compatible gateway panel for qoder2api.",
+  "aboutDesc": "QCoder Manager: a PAT account-pool management and OpenAI-compatible gateway panel for qoder2api.",
   "versionFallback": " (build number; the running version is authoritative)",
   "dockLabel": "Dock position",
   "dockPinned": "Pinned to bottom",

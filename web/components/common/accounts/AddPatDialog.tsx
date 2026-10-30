@@ -83,7 +83,7 @@ export function AddPatDialog({
       const upstreamId = group === DEFAULT_GROUP ? 0 : Number(group);
       const created = await accountsApi.create(label.trim(), pat.trim(), upstreamId);
       setResult(created);
-      window.dispatchEvent(new Event('qcode-manager:accounts-changed'));
+      window.dispatchEvent(new Event('qcoder-manager:accounts-changed'));
       notify.ok(
         t('accounts.addDone', {name: created.label}),
         created.test.ok ? created.test.msg : t('accounts.addTestFailed', {msg: created.test.msg}),

@@ -12,7 +12,7 @@ from fastapi.responses import JSONResponse, Response, StreamingResponse
 
 from .. import config, db, iputil, keysvc
 
-logger = logging.getLogger('qcode.gateway')
+logger = logging.getLogger('qcoder.gateway')
 
 router = APIRouter(tags=['gateway'])
 
@@ -20,7 +20,7 @@ router = APIRouter(tags=['gateway'])
 RATE_MAX_PER_MIN = config.GATEWAY_RATE_PER_MIN
 MAX_BODY_MB = config.GATEWAY_MAX_BODY_MB
 
-SERVICE_NAME = 'QCode Manager'
+SERVICE_NAME = 'QCoder Manager'
 
 
 def _oai_error(message: str, status: int = 400, err_type: str = 'invalid_request_error',

@@ -18,7 +18,7 @@
   "uiReference": "UI 參考",
   "help": "說明與設定",
   "about": "關於",
-  "aboutDesc": "QCode Manager：面向 qoder2api 的 PAT 帳號池管理與 OpenAI 相容閘道面板。",
+  "aboutDesc": "QCoder Manager：面向 qoder2api 的 PAT 帳號池管理與 OpenAI 相容閘道面板。",
   "versionFallback": "（建置號，執行版本以後端為準）",
   "dockLabel": "底欄位置",
   "dockPinned": "固定底部",

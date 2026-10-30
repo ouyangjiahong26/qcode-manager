@@ -17,7 +17,7 @@ import time
 from . import config, db
 from .services import qoder2api
 
-logger = logging.getLogger('qcode.accountsvc')
+logger = logging.getLogger('qcoder.accountsvc')
 
 # 池内并发测活上限：上游是单机服务，全量并发打过去只会拖垮它（与保活调度同值）。
 TEST_CONCURRENCY = 5
