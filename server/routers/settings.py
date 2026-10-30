@@ -9,7 +9,7 @@ from pydantic import BaseModel, Field
 
 from .. import db, security
 from ..iputil import client_ip
-from ..services import autoupdate, updater
+from .. import systemupd
 
 router = APIRouter(prefix='/api', tags=['settings'])
 
@@ -66,14 +66,14 @@ def get_github_token(user: dict = Depends(security.require_admin)) -> dict:
     环境变量里已有值时界面要说明「由部署注入、面板填写不生效」，否则用户会以为
     自己填的那份没保存。
     """
+    effective = systemupd.github_token()
     env_token = next((str(os.environ.get(k) or '').strip()
                       for k in ('QC_GITHUB_TOKEN', 'GITHUB_TOKEN')
                       if (os.environ.get(k) or '').strip()), '')
     stored = str(db.get_setting('github_token', '') or '').strip()
-    effective = env_token or stored
     return {
         'configured': bool(effective),
-        'masked': updater.mask_token(effective),
+        'masked': systemupd.mask_token(effective),
         'source': 'env' if env_token else ('panel' if stored else ''),
     }
 
@@ -90,16 +90,16 @@ def save_github_token(body: dict, user: dict = Depends(security.require_admin)) 
         raise HTTPException(status_code=400, detail='GitHub Token 过长（最多 512 字符）')
     db.set_setting('github_token', raw)
     security.audit(user, 'update_github_token', '', '已配置' if raw else '已清除')
-    return {'configured': bool(raw), 'masked': updater.mask_token(raw)}
+    return {'configured': bool(raw), 'masked': systemupd.mask_token(raw)}
 
 
 # ── GitHub 镜像 ──────────────────────────────────────────
 @router.get('/settings/github-mirror')
 def get_github_mirror(user: dict = Depends(security.require_admin)) -> dict:
     """当前生效的 GitHub 镜像基址 + 来源（面板 / 环境变量 / 未配置）。"""
-    env_value = updater.normalize_mirror(os.environ.get('QC_GITHUB_MIRROR') or '')
-    stored = updater.stored_github_mirror()
-    effective = updater.normalize_mirror(stored or env_value)
+    env_value = systemupd.normalize_mirror(os.environ.get('QC_GITHUB_MIRROR') or '')
+    stored = systemupd.stored_github_mirror()
+    effective = systemupd.github_mirror()
     return {
         'mirror': effective,
         'stored': stored,
@@ -121,7 +121,7 @@ def save_github_mirror(body: dict, user: dict = Depends(security.require_admin))
         db.set_setting('github_mirror', '')
         security.audit(user, 'update_github_mirror', '', '已清除')
         return get_github_mirror(user)
-    value = updater.normalize_mirror(raw)
+    value = systemupd.normalize_mirror(raw)
     if not value:
         raise HTTPException(
             status_code=400,
@@ -134,8 +134,8 @@ def save_github_mirror(body: dict, user: dict = Depends(security.require_admin))
 
 # ── 自动更新 ─────────────────────────────────────────────
 def _auto_update_payload() -> dict:
-    cfg = autoupdate.get_config()
-    state = autoupdate.get_state()
+    cfg = systemupd.get_config()
+    state = systemupd.get_state()
     return {
         **cfg,
         'state': {
@@ -144,10 +144,10 @@ def _auto_update_payload() -> dict:
             'last_message': str(state.get('last_message') or ''),
             'pending_version': str(state.get('pending_version') or ''),
         },
-        # 部署形态不支持一键更新时（如 Windows 原生）给出原因，前端据此禁用开关
-        'unsupported_reason': autoupdate.unsupported_reason(),
+        # 部署形态不支持一键更新时给出原因，前端据此禁用开关
+        'unsupported_reason': systemupd.unsupported_reason(),
         # 面板显示「服务器本地时间」，时间窗按它算
-        'server_tz_offset_minutes': autoupdate.server_tz_offset_minutes(),
+        'server_tz_offset_minutes': systemupd.server_tz_offset_minutes(),
     }
 
 
@@ -165,13 +165,13 @@ def save_auto_update(body: dict, request: Request,
     与一键更新同一权限（需要会话管理员）：开了它就等于授权面板在无人值守时
     自行下载并安装新版本、重启服务。
     """
-    cfg, err = autoupdate.validate_config(body)
+    cfg, err = systemupd.validate_config(body)
     if cfg is None:
         raise HTTPException(status_code=400, detail=err)
-    blocked = autoupdate.unsupported_reason()
+    blocked = systemupd.unsupported_reason()
     if blocked and cfg['enabled']:
         raise HTTPException(status_code=409, detail=blocked)
-    saved = autoupdate.save_config(cfg)
+    saved = systemupd.save_config(cfg)
     security.audit(user, 'update_auto_update', '',
                    (f"开启，每 {saved['interval_hours']} 小时检测，"
                     f"时间窗 {saved['window_start']:02d}–{saved['window_end']:02d}，"
