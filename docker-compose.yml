@@ -19,9 +19,9 @@ services:
     build:
       context: .
       args:
-        # 可选构建加速镜像（国内机器建议填写，否则构建先白等一轮官方源）
-        NPM_REGISTRY: ""
-        PIP_INDEX_URL: ""
+        # 构建源（在 .env 里覆盖）：pip 默认清华源；npm 默认官方源、失败自动降级 npmmirror
+        NPM_REGISTRY: ${NPM_REGISTRY:-}
+        PIP_INDEX_URL: ${PIP_INDEX_URL:-https://pypi.tuna.tsinghua.edu.cn/simple}
     image: qcoder-manager:latest
     container_name: qcoder-manager
     restart: unless-stopped
