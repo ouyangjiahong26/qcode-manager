@@ -193,7 +193,7 @@ class DailyHourly(RouterTestCase):
         rows = self.client.get('/api/stats/hourly').json()
         self.assertEqual(len(rows), 24)
         self.assertEqual([r['hour'] for r in rows], list(range(24)))
-        by_hour = {r['hour'] for r in rows}
+        by_hour = {r['hour']: r for r in rows}
         self.assertEqual(by_hour[other_hour]['requests'], 2)
         self.assertEqual(by_hour[now_hour]['requests'], 1)
         self.assertEqual(by_hour[now_hour]['failed'], 1)
