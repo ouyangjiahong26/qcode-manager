@@ -199,13 +199,21 @@ const ko: Record<Domain, Dict> = {
   logs: koLogs, models: koModels, playground: koPlayground,
 };
 
-/** 各语言的完整字典：域合并 + 源语言兜底。 */
+/** 按域名构建带命名空间的字典：词条以「域.键」寻址（t('login.username')），
+ * 每个域单独做源语言兜底（当前语言该域缺的键回退 zh-CN）。 */
+function buildDict(base: Record<Domain, Dict>, lang: Record<Domain, Dict>): Dict {
+  const out: Dict = {};
+  for (const d of DOMAINS) out[d] = deepMerge(base[d] ?? {}, lang[d] ?? {});
+  return out;
+}
+
+/** 各语言的完整字典。 */
 const DICTS: Record<Locale, Dict> = {
-  'zh-CN': Object.values(zhCN).reduce<Dict>((acc, d) => deepMerge(acc, d), {}),
-  'zh-TW': Object.values(zhTW).reduce<Dict>((acc, d) => deepMerge(acc, d), {}),
-  en: Object.values(en).reduce<Dict>((acc, d) => deepMerge(acc, d), {}),
-  ja: Object.values(ja).reduce<Dict>((acc, d) => deepMerge(acc, d), {}),
-  ko: Object.values(ko).reduce<Dict>((acc, d) => deepMerge(acc, d), {}),
+  'zh-CN': buildDict(zhCN, zhCN),
+  'zh-TW': buildDict(zhCN, zhTW),
+  en: buildDict(zhCN, en),
+  ja: buildDict(zhCN, ja),
+  ko: buildDict(zhCN, ko),
 };
 
 const PHRASES: Record<Locale, PhraseTable> = {
