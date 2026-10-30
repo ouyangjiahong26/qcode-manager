@@ -48,7 +48,7 @@ from urllib.parse import quote
 
 from . import config, db
 
-logger = logging.getLogger('qcode.pgsync')
+logger = logging.getLogger('qcoder.pgsync')
 
 STATUS_FILE = config.DATA_DIR / 'pgsync-status.json'
 CONFIG_KEY = 'pg_sync_config'

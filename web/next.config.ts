@@ -3,13 +3,13 @@ import type {NextConfig} from 'next';
 const isExport = process.env.NEXT_OUTPUT_EXPORT === '1';
 const backend = process.env.NEXT_PUBLIC_BACKEND_BASE_URL || 'http://127.0.0.1:7865';
 
-// 子路径部署：构建时设 NEXT_PUBLIC_BASE_PATH=/qcode-manager。
+// 子路径部署：构建时设 NEXT_PUBLIC_BASE_PATH=/qcoder-manager。
 // 留空即根路径部署（默认），此时不设置 basePath，产物与改动前逐字节一致。
 //
 // 这里只设 basePath。Next 在 assetPrefix 为空时会自动把它补成 basePath
 // （next/dist/server/config.js：`if (result.assetPrefix === '') result.assetPrefix = result.basePath`），
 // 而 webpack 的 publicPath 只由 assetPrefix 决定（`${assetPrefix}/_next/`），
-// 所以最终是 `/qcode-manager/_next/`，不会出现双前缀。
+// 所以最终是 `/qcoder-manager/_next/`，不会出现双前缀。
 // 也就是说「只设 basePath」与「两者都设成同一个值」产物完全一致，不必特意回避 assetPrefix。
 const basePath = (process.env.NEXT_PUBLIC_BASE_PATH || '').replace(/\/+$/, '');
 

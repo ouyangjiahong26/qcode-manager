@@ -60,7 +60,7 @@ export const SETTINGS_TAB_LABEL_KEYS: Record<SettingsTab, string> = {
  *
  * **不 import `BASE_PATH` 的原因**（子路径部署下这条路必须仍然成立）：
  * 模块要保持零依赖，所以判据改成**匹配后缀**：`/settings/models` 与
- * `/qcode-manager/settings/models` 都能认出来，与是否带前缀无关。
+ * `/qcoder-manager/settings/models` 都能认出来，与是否带前缀无关。
  *
  * 返回 `null` 表示「不在设置页 / 没有子路径」——调用方据此回落到默认 Tab。
  */

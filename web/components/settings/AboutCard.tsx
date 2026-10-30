@@ -15,7 +15,7 @@ import {RichText} from '@/lib/i18n/rich-text';
 import {SkeletonBar} from '@/components/common/states/SkeletonBar';
 
 const BUILD_TIME = process.env.NEXT_PUBLIC_BUILD_TIME || '';
-const REPO_URL = 'https://github.com/fengyinxia/qcode-manager';
+const REPO_URL = 'https://github.com/ouyangjiahong26/qcoder-manager';
 
 export function AboutCard() {
   const t = useT();
@@ -29,7 +29,7 @@ export function AboutCard() {
     <div className="rounded-[20px] bg-muted p-5 text-xs leading-6 text-muted-foreground">
       <div className="mb-2 flex items-center gap-2 text-sm font-medium text-foreground">
         <Info className="h-4 w-4" />
-        QCode Manager
+        QCoder Manager
       </div>
       <div className="mb-3 flex flex-wrap gap-x-6 gap-y-1">
         <span>
@@ -54,7 +54,7 @@ export function AboutCard() {
             target="_blank"
             rel="noreferrer"
           >
-            fengyinxia/qcode-manager
+            ouyangjiahong26/qcoder-manager
           </a>
         </span>
       </div>

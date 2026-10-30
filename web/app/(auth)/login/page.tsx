@@ -90,7 +90,7 @@ export default function LoginPage() {
             <Bot className="h-5 w-5" />
           </div>
           <div className="space-y-1">
-            <h1 className="text-lg font-semibold tracking-[-0.01em]">QCode Manager</h1>
+            <h1 className="text-lg font-semibold tracking-[-0.01em]">QCoder Manager</h1>
             <p className="text-xs text-muted-foreground">
               {t('login.subtitle')}
             </p>

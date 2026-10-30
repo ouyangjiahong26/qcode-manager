@@ -93,7 +93,7 @@ def _release(tag: str = 'v9.9.9', *, assets: list | None = None,
         'html_url': f'https://github.com/{systemupd.MANAGER_REPO}/releases/tag/{tag}',
         'body': '## 更新内容\n- 修复若干问题',
         'published_at': '2026-10-01T00:00:00Z',
-        'assets': [{'name': f'qcode-manager-{tag}.tar.gz',
+        'assets': [{'name': f'qcoder-manager-{tag}.tar.gz',
                     'browser_download_url': 'https://example.com/pkg.tar.gz',
                     'size': 12345, 'digest': 'sha256:' + 'a' * 64}]
         if assets is None else assets,
@@ -215,7 +215,7 @@ class Sha256VerifyTest(unittest.TestCase):
     def setUp(self) -> None:
         self._tmp = tempfile.TemporaryDirectory()
         self.archive = Path(self._tmp.name) / 'pkg.tar.gz'
-        self.archive.write_bytes(b'hello qcode-manager')
+        self.archive.write_bytes(b'hello qcoder-manager')
 
     def tearDown(self) -> None:
         self._tmp.cleanup()
@@ -251,7 +251,7 @@ def _make_package(path: Path, version: str = 'v1.2.3') -> None:
     """构造带 `.version` 的发布包（与发布流水线的目录结构一致）。"""
     buf = io.BytesIO()
     with tarfile.open(fileobj=buf, mode='w:gz') as tf:
-        root = 'qcode-manager-1.2.3'
+        root = 'qcoder-manager-1.2.3'
         ver = tarfile.TarInfo(f'{root}/.version')
         data = version.encode()
         ver.size = len(data)
@@ -541,7 +541,7 @@ class AutoUpdateDecideTest(unittest.TestCase):
 class PgsyncConfigTest(_Case):
     def test_save_and_public_masks_password(self) -> None:
         cfg = pgsync.save_config({'host': 'db.local', 'password': 's3cret',
-                                  'user': 'qc', 'dbname': 'qcode'})
+                                  'user': 'qc', 'dbname': 'qcoder'})
         self.assertEqual(cfg['password'], 's3cret')   # 存的是明文（导出要用）
         public = pgsync.public_config()
         self.assertEqual(public['password'], '********')

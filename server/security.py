@@ -53,6 +53,7 @@ _WEAK_PASSWORDS = frozenset({
     '123456789012', '1234567890123', '12345678901234',
     'qwertyuiop', 'qwerty123456', 'qwertyuiop123',
     'qcode', 'qcode123', 'qcode1234', 'qcode2024', 'qcodemanager',
+    'qcoder', 'qcoder123', 'qcodermanager',
     'letmein12345', 'iloveyou1234', '111111111111', '000000000000',
 })
 
@@ -231,7 +232,7 @@ def bootstrap_users() -> dict:
     if not env_pwd:
         _write_initial_password_file(pwd)
         print('=' * 60, file=sys.stderr)
-        print('[QCode Manager] 已生成初始管理员账号', file=sys.stderr)
+        print('[QCoder Manager] 已生成初始管理员账号', file=sys.stderr)
         print(f'  用户名: admin', file=sys.stderr)
         print(f'  密码  : {pwd}', file=sys.stderr)
         print('  请登录后立即在「设置 → 管理用户」中修改密码。', file=sys.stderr)

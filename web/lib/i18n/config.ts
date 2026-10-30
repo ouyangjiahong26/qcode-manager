@@ -13,7 +13,7 @@ export type Locale = (typeof LOCALES)[number];
 /** 简体中文是源语言：其它语言缺键时回退到它。 */
 export const DEFAULT_LOCALE: Locale = 'zh-CN';
 
-export const STORAGE_KEY = 'qcode-manager:locale';
+export const STORAGE_KEY = 'qcoder-manager:locale';
 
 /**
  * 语言自称（native name）：切换器里一律显示母语写法，

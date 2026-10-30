@@ -103,7 +103,7 @@ def _start_mock() -> tuple[_Proc, str]:
     port = _free_port()
     proc = _Proc([PY, str(ROOT / 'dev' / 'mock_upstream.py'),
                   '--host', '127.0.0.1', '--port', str(port)],
-                 dict(os.environ), log_path=Path(tempfile.gettempdir()) / 'qcode-mock.log')
+                 dict(os.environ), log_path=Path(tempfile.gettempdir()) / 'qcoder-mock.log')
     base = f'http://127.0.0.1:{port}'
     _wait_http(f'{base}/v1/models', log_path=proc.log_path)
     return proc, base
@@ -119,7 +119,7 @@ class TestMainE2E(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls._tmp = tempfile.TemporaryDirectory(prefix='qcode-e2e-')
+        cls._tmp = tempfile.TemporaryDirectory(prefix='qcoder-e2e-')
         tmp = Path(cls._tmp.name)
         cls.mock, mock_base = _start_mock()
         # 静态目录指向不存在的路径：本组场景验证纯 API 面，SPA 兜底由场景 8 单测
@@ -160,7 +160,7 @@ class TestMainE2E(unittest.TestCase):
         # /api/sysinfo 顺带验证版本口径来自 main.__version__
         r = self.panel.client.get('/api/sysinfo')
         self.assertEqual(r.status_code, 200)
-        self.assertEqual(r.json()['service'], 'qcode-manager')
+        self.assertEqual(r.json()['service'], 'qcoder-manager')
         # 错密码 5 次 → 第 6 次被锁定 429
         for _ in range(5):
             bad = self.panel.client.post('/api/login', json={
@@ -314,12 +314,12 @@ class TestStaticHosting(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls._tmp = tempfile.TemporaryDirectory(prefix='qcode-static-')
+        cls._tmp = tempfile.TemporaryDirectory(prefix='qcoder-static-')
         tmp = Path(cls._tmp.name)
         web = tmp / 'web'
         web.mkdir()
-        (web / 'index.html').write_text('<html>qcode-static-index</html>', encoding='utf-8')
-        (web / '404.html').write_text('<html>qcode-static-404</html>', encoding='utf-8')
+        (web / 'index.html').write_text('<html>qcoder-static-index</html>', encoding='utf-8')
+        (web / '404.html').write_text('<html>qcoder-static-404</html>', encoding='utf-8')
         # 上游指向必然拒绝连接的回环端口：/healthz 的上游探测立刻失败返回，
         # 不会因探测一个「黑洞」地址拖住整个健康检查
         cls.panel = _Panel(data_dir=tmp / 'data', static_dir=web,
@@ -338,7 +338,7 @@ class TestStaticHosting(unittest.TestCase):
     def test_index_and_spa_fallback(self) -> None:
         r = self.panel.client.get('/')
         self.assertEqual(r.status_code, 200)
-        self.assertIn('qcode-static-index', r.text)
+        self.assertIn('qcoder-static-index', r.text)
         # 未命中路径走 SPA 兜底（404 页面），绝不 500
         r = self.panel.client.get('/some/unknown/page', follow_redirects=True)
         self.assertIn(r.status_code, (200, 404))

@@ -2,6 +2,18 @@
 
 本文件供面板「设置 → 更新日志」与一键更新流程解析，格式：版本号二级标题 + 分组列表。
 
+## 未发布
+
+### 变更
+
+- 项目更名为 qcoder-manager：systemd 服务名与安装目录（`/opt/qcoder-manager`）、Docker Compose 服务与镜像名、一键更新的发布包资产名（`qcoder-manager-<tag>.tar.gz`）同步更换。已部署实例需重跑 `deploy/install.sh` 或按部署指南迁移目录
+- 浏览器端本地存储键与页面事件名随项目更名（`qcoder-manager:*`），升级后界面偏好（语言、Dock 位置、更新日志已读标记）与登录会话缓存会重置，重新设置即可
+
+### 修复
+
+- 「关于」页与一键更新的默认仓库此前指向 `fengyinxia/qcode-manager`（上游作者账号，非本项目仓库），已改为实际发布仓库
+- Docker Compose 里上游 qoder2api 的构建改用带 pip 国内镜像源的包装 Dockerfile（`deploy/qoder2api.Dockerfile`），服务器出网到 PyPI 官方源超时时构建不再失败
+
 ## 0.1.0
 
 首个版本。

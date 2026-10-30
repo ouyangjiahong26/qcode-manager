@@ -143,7 +143,7 @@ async def upload_update_package(
             raise HTTPException(
                 status_code=400,
                 detail='包里没有 .version —— 这不是本项目的发布包（发布页下载的是 '
-                       'qcode-manager-vX.Y.Z.tar.gz）',
+                       'qcoder-manager-vX.Y.Z.tar.gz）',
             )
     except HTTPException:
         tmp_path.unlink(missing_ok=True)

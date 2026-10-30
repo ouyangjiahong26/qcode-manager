@@ -1,7 +1,7 @@
-# QCode Manager —— Docker Compose 部署
+# QCoder Manager —— Docker Compose 部署
 #
 # 两个服务：
-#   qcode-manager  本面板（FastAPI + 前端静态导出，容器内 7865）
+#   qcoder-manager  本面板（FastAPI + 前端静态导出，容器内 7865）
 #   qoder2api      上游 Qoder 账号池 / OpenAI 兼容服务（容器内 8963，不出外网）
 #
 # 用法：
@@ -11,19 +11,19 @@
 #   2) cp .env.example .env 按需修改（至少确认 QC_ADMIN_PASSWORD）
 #   3) docker compose up -d --build
 #      首次启动若未设 QC_ADMIN_PASSWORD，会随机生成密码并打印到容器日志：
-#      docker compose logs qcode-manager | grep -A2 密码
+#      docker compose logs qcoder-manager | grep -A2 密码
 #   4) 浏览器经反向代理访问 pm.<你的域名>（直连仅绑宿主回环 7865）
 
 services:
-  qcode-manager:
+  qcoder-manager:
     build:
       context: .
       args:
         # 可选构建加速镜像（国内机器建议填写，否则构建先白等一轮官方源）
         NPM_REGISTRY: ""
         PIP_INDEX_URL: ""
-    image: qcode-manager:latest
-    container_name: qcode-manager
+    image: qcoder-manager:latest
+    container_name: qcoder-manager
     restart: unless-stopped
     environment:
       TZ: Asia/Shanghai
@@ -53,7 +53,7 @@ services:
       # **权限**：bind mount 属主由宿主决定，容器以 uid 10001 运行——
       # 首次启动前在 compose 所在目录执行一次：
       #   chown -R 10001:10001 ./data
-      # 网络文件系统上改不了属主时换命名卷（volumes: qcode-data:，挂 qcode-data:/app/data）
+      # 网络文件系统上改不了属主时换命名卷（volumes: qcoder-data:，挂 qcoder-data:/app/data）
       - ./data:/app/data
     depends_on:
       - qoder2api
@@ -72,7 +72,7 @@ services:
     restart: unless-stopped
     environment:
       TZ: Asia/Shanghai
-    # 不映射 ports：只在 compose 内网暴露给 qcode-manager，外面摸不到
+    # 不映射 ports：只在 compose 内网暴露给 qcoder-manager，外面摸不到
     expose:
       - "8963"
     volumes:

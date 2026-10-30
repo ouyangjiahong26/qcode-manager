@@ -176,7 +176,7 @@
   "updAutoSavedOn": "자동 업데이트를 켰습니다",
   "updAutoSavedOff": "자동 업데이트를 껐습니다",
   "updPkgTitle": "오프라인 업데이트 패키지",
-  "updPkgDesc": "GitHub에 접근할 수 없는 기기용: 릴리스 페이지에서 `qcode-manager-vX.Y.Z.tar.gz`를 내려받아 여기에 업로드하고 그것으로 업데이트합니다(**네트워크 사용 안 함**). 업로드 시 이 프로젝트의 릴리스 패키지인지 검증하고 릴리스 페이지의 sha256과 대조합니다.",
+  "updPkgDesc": "GitHub에 접근할 수 없는 기기용: 릴리스 페이지에서 `qcoder-manager-vX.Y.Z.tar.gz`를 내려받아 여기에 업로드하고 그것으로 업데이트합니다(**네트워크 사용 안 함**). 업로드 시 이 프로젝트의 릴리스 패키지인지 검증하고 릴리스 페이지의 sha256과 대조합니다.",
   "updPkgFile": "패키지 파일",
   "updPkgShaLabel": "릴리스 페이지 sha256 (필수)",
   "updPkgShaPlaceholder": "릴리스 노트의 64자 다이제스트를 붙여넣기",
@@ -265,6 +265,6 @@
   "aboutVersion": "버전",
   "aboutBuildTime": "빌드 시각",
   "aboutRepo": "저장소",
-  "aboutDesc": "QCode Manager는 Qoder → OpenAI 호환 프록시를 위해 웹 관리 화면과 대외 인터페이스 게이트웨이를 제공합니다: PAT 계정 풀 등록, 다중 업스트림 그룹화, 키 배포, IP 제어, 요청 로그 및 사용량 통계.",
+  "aboutDesc": "QCoder Manager는 Qoder → OpenAI 호환 프록시를 위해 웹 관리 화면과 대외 인터페이스 게이트웨이를 제공합니다: PAT 계정 풀 등록, 다중 업스트림 그룹화, 키 배포, IP 제어, 요청 로그 및 사용량 통계.",
   "aboutUsage": "다운스트림 연결: Base URL에 `https://내도메인/v1`을 입력하고 'API 키' 페이지에서 생성한 `qk_...` 키를 사용하세요."
 }

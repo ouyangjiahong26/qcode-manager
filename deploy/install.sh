@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================
-# QCode Manager 一键部署脚本（宿主机 + systemd 形态）
+# QCoder Manager 一键部署脚本（宿主机 + systemd 形态）
 #
 # 只负责面板本身；上游 qoder2api 请单独部署（systemd 独立进程或
 # docker-compose.yml 里的第二个服务），详见 deploy/README.md。
@@ -14,7 +14,7 @@
 set -euo pipefail
 
 # ── 可配置项（均可用环境变量覆盖）─────────────────────────
-APP_DIR="${APP_DIR:-/opt/qcode-manager}"
+APP_DIR="${APP_DIR:-/opt/qcoder-manager}"
 MANAGER_PORT="${MANAGER_PORT:-7865}"
 PY="${PY:-/usr/bin/python3}"
 NODE_MIN_MAJOR=20
@@ -117,26 +117,26 @@ step "3/4 注册 systemd 服务"
 
 # 服务账号：uid 10002（避开常见业务 uid；容器形态对齐见 Dockerfile 的 10001，
 # 两者不共享文件所以不必同 uid）
-RUN_USER=qcode
+RUN_USER=qcoder
 if id "$RUN_USER" >/dev/null 2>&1; then
     RUN_GROUP="$(id -gn "$RUN_USER")"
 else
-    RUN_GROUP=qcode
+    RUN_GROUP=qcoder
     useradd --system --user-group --home-dir "$APP_DIR" --shell /usr/sbin/nologin "$RUN_USER"
     ok "已创建服务账号 ${RUN_USER}"
 fi
 
-sed -e "s#/opt/qcode-manager#${APP_DIR}#g" \
+sed -e "s#/opt/qcoder-manager#${APP_DIR}#g" \
     -e "s#--port 7865#--port ${MANAGER_PORT}#g" \
     -e "s#QC_MANAGER_PORT=7865#QC_MANAGER_PORT=${MANAGER_PORT}#g" \
-    "${APP_DIR}/deploy/qcode-manager.service" > /etc/systemd/system/qcode-manager.service
+    "${APP_DIR}/deploy/qcoder-manager.service" > /etc/systemd/system/qcoder-manager.service
 
 chown -R "${RUN_USER}:${RUN_GROUP}" "${APP_DIR}"
 chmod 750 "${APP_DIR}/data"
 
 systemctl daemon-reload
-systemctl enable --now qcode-manager >/dev/null 2>&1
-systemctl restart qcode-manager
+systemctl enable --now qcoder-manager >/dev/null 2>&1
+systemctl restart qcoder-manager
 ok "服务已注册并启动"
 
 # ── 4. 验证与收尾 ─────────────────────────────────────────
@@ -146,7 +146,7 @@ sleep 2
 if curl -sf -m 5 "http://127.0.0.1:${MANAGER_PORT}/healthz" >/dev/null 2>&1; then
     ok "健康检查通过（/healthz）"
 else
-    warn "健康检查暂未通过；查看日志：journalctl -u qcode-manager -e --no-pager"
+    warn "健康检查暂未通过；查看日志：journalctl -u qcoder-manager -e --no-pager"
 fi
 
 INITIAL_PW_FILE="${APP_DIR}/data/initial-admin-password.txt"
@@ -154,10 +154,10 @@ INITIAL_PW_FILE="${APP_DIR}/data/initial-admin-password.txt"
 cat <<EOF
 
   ┌──────────────────────────────────────────────────────┐
-  │  QCode Manager 已安装                                 │
+  │  QCoder Manager 已安装                                 │
   │  面板地址：http://127.0.0.1:${MANAGER_PORT}（请经反向代理对外）      │
-  │  服务管理：systemctl {status|restart} qcode-manager   │
-  │  日志：journalctl -u qcode-manager -f                 │
+  │  服务管理：systemctl {status|restart} qcoder-manager   │
+  │  日志：journalctl -u qcoder-manager -f                 │
   └──────────────────────────────────────────────────────┘
 EOF
 
@@ -165,7 +165,7 @@ if [ -r "$INITIAL_PW_FILE" ]; then
     printf '\n  初始管理员密码：%s\n  （来自 %s，首次登录后请改密）\n' \
         "$(cat "$INITIAL_PW_FILE")" "$INITIAL_PW_FILE"
 else
-    printf '\n  初始管理员密码见容器日志：journalctl -u qcode-manager | grep -A2 密码\n'
+    printf '\n  初始管理员密码见容器日志：journalctl -u qcoder-manager | grep -A2 密码\n'
 fi
 
 # 防火墙提示：面板只应经反代暴露，不开 7865 公网端口

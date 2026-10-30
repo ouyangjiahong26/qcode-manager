@@ -18,7 +18,7 @@
   "uiReference": "UI 참고",
   "help": "도움말 및 설정",
   "about": "정보",
-  "aboutDesc": "QCode Manager: qoder2api를 위한 PAT 계정 풀 관리 및 OpenAI 호환 게이트웨이 패널입니다.",
+  "aboutDesc": "QCoder Manager: qoder2api를 위한 PAT 계정 풀 관리 및 OpenAI 호환 게이트웨이 패널입니다.",
   "versionFallback": "(빌드 번호이며 실행 버전이 기준입니다)",
   "dockLabel": "독 위치",
   "dockPinned": "하단 고정",

@@ -1,4 +1,4 @@
-# QCode Manager 容器镜像（管理面板 + OpenAI 兼容网关）
+# QCoder Manager 容器镜像（管理面板 + OpenAI 兼容网关）
 #
 # 多阶段构建：
 #   阶段一 web-builder —— Node 20 构建 Next.js 静态导出（web/out）

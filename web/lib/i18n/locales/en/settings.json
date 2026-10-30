@@ -176,7 +176,7 @@
   "updAutoSavedOn": "Auto update enabled",
   "updAutoSavedOff": "Auto update disabled",
   "updPkgTitle": "Offline update package",
-  "updPkgDesc": "For machines that cannot reach GitHub: download `qcode-manager-vX.Y.Z.tar.gz` from the releases page, upload it here and update from it (**no network involved**). On upload it is verified to be a release package of this project and checked against the sha256 on the releases page.",
+  "updPkgDesc": "For machines that cannot reach GitHub: download `qcoder-manager-vX.Y.Z.tar.gz` from the releases page, upload it here and update from it (**no network involved**). On upload it is verified to be a release package of this project and checked against the sha256 on the releases page.",
   "updPkgFile": "Package file",
   "updPkgShaLabel": "Release-page sha256 (required)",
   "updPkgShaPlaceholder": "Paste the 64-character digest shown in the release notes",
@@ -265,6 +265,6 @@
   "aboutVersion": "Edition",
   "aboutBuildTime": "Build time",
   "aboutRepo": "Repository",
-  "aboutDesc": "QCode Manager provides the web console and public API gateway for the Qoder → OpenAI-compatible proxy: PAT account-pool onboarding, multi-upstream grouping, key distribution, IP control, request logs and usage statistics.",
+  "aboutDesc": "QCoder Manager provides the web console and public API gateway for the Qoder → OpenAI-compatible proxy: PAT account-pool onboarding, multi-upstream grouping, key distribution, IP control, request logs and usage statistics.",
   "aboutUsage": "Downstream setup: set the Base URL to `https://your-domain/v1` and use a `qk_...` key generated on the API keys page."
 }

@@ -1,4 +1,4 @@
-"""QCode Manager 入口：管理 API + 对外反代网关 + 静态前端托管。"""
+"""QCoder Manager 入口：管理 API + 对外反代网关 + 静态前端托管。"""
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
@@ -22,7 +22,7 @@ from .routers import (
 )
 
 
-logger = logging.getLogger('qcode.main')
+logger = logging.getLogger('qcoder.main')
 
 # 版本号唯一出处：/api/sysinfo、/api/system/* 与一键更新流程共用
 # （systemupd._app_version 延迟 import 本模块读 app.version）。
@@ -76,7 +76,7 @@ def _warn_if_exposed() -> None:
 
 
 app = FastAPI(
-    title='QCode Manager',
+    title='QCoder Manager',
     version=__version__,
     lifespan=lifespan,
     # 生产环境默认关闭交互式文档与 OpenAPI 描述：
@@ -310,7 +310,7 @@ async def cache_headers(request: Request, call_next):
 def sysinfo(user: dict = Depends(security.current_user)) -> dict:
     """服务信息。需要登录 —— 版本类信息不应对未认证访问者随意暴露。"""
     return {
-        'service': 'qcode-manager',
+        'service': 'qcoder-manager',
         'version': app.version,
     }
 
@@ -465,7 +465,7 @@ if config.STATIC_DIR.is_dir():
 
 # ── 子路径部署（反向代理前缀）────────────────────────────────────────
 #
-# 反向代理把本站挂在 /qcode 这类前缀下、且**不剥离**前缀时，后端收到的路径
+# 反向代理把本站挂在 /qoder 这类前缀下、且**不剥离**前缀时，后端收到的路径
 # 仍带着前缀 —— 路由、静态挂载与 SPA 兜底全都匹配不上，页面会 404。
 # 这里在最外层统一剥掉，让内部逻辑只看到「前缀之后的路径」。
 #

@@ -5,7 +5,7 @@ import {authApi} from '@/lib/api';
 import {BASE_PATH} from '@/lib/base-path';
 import type {Me, Role} from '@/lib/types/auth';
 
-const ME_CACHE_KEY = 'qcode-manager:me';
+const ME_CACHE_KEY = 'qcoder-manager:me';
 
 /** 缓存登录态，避免每次整页加载都先空一下再填充 */
 function readCachedMe(): Me | null {

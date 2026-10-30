@@ -12,7 +12,7 @@ from typing import Any, Iterable
 
 from . import config
 
-logger = logging.getLogger('qcode.db')
+logger = logging.getLogger('qcoder.db')
 
 _lock = threading.RLock()
 _conn: sqlite3.Connection | None = None

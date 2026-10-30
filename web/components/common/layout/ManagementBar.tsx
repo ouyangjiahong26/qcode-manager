@@ -53,12 +53,12 @@ const IconOptions = {
 const BUILD_TIME = process.env.NEXT_PUBLIC_BUILD_TIME || '';
 
 // v2：坐标语义由「左边缘」改为「水平中心」，旧版本存储的位置不再兼容
-const DOCK_STORAGE_KEY = 'qcode-manager:dock-position-v2';
-const DOCK_TIP_STORAGE_KEY = 'qcode-manager:dock-tip-dismissed';
+const DOCK_STORAGE_KEY = 'qcoder-manager:dock-position-v2';
+const DOCK_TIP_STORAGE_KEY = 'qcoder-manager:dock-tip-dismissed';
 // 底栏位置模式。floating = 自由拖动（默认）；pinned = 固定底部居中、不可拖。
 // 之所以要有 pinned：底栏是**浮动**的，拖到页面中部就会压住正文。形态本身按
 // 既定决策保留，但得给用户一个「别再挡我」的确定性选项。
-const DOCK_MODE_STORAGE_KEY = 'qcode-manager:dock-mode';
+const DOCK_MODE_STORAGE_KEY = 'qcoder-manager:dock-mode';
 const DOCK_MARGIN = 16;
 // 180ms 太短：正常慢点击也会越过阈值，进入拖动后 pointerup 还会吞掉 click。
 // 500ms 与系统长按手势一致；拖动前还要再确认「指针没先移动」。
@@ -591,7 +591,7 @@ export function ManagementBar() {
                               {me.username}
                             </div>
                             <div className="truncate text-xs text-muted-foreground">
-                              QCode Manager
+                              QCoder Manager
                             </div>
                             <div className="mt-2 flex flex-wrap items-center gap-1.5">
                               <Badge variant="secondary" className="h-5 rounded-full px-2 text-[10px]">

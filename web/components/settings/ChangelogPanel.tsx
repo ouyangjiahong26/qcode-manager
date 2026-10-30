@@ -17,7 +17,7 @@ import {useT} from '@/lib/i18n/provider';
 import {cn} from '@/lib/utils';
 import type {Changelog, ChangelogItem} from '@/lib/types/settings';
 
-const REPO_URL = 'https://github.com/fengyinxia/qcode-manager/releases';
+const REPO_URL = 'https://github.com/ouyangjiahong26/qcoder-manager/releases';
 
 /** 分类配色，让「安全」「修复」这类一眼可辨 */
 const SECTION_STYLE: Record<string, string> = {
