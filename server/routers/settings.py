@@ -1,0 +1,331 @@
+"""模型映射、管理端用户与面板杂项设置。"""
+from __future__ import annotations
+
+import os
+import secrets
+
+from fastapi import APIRouter, Depends, HTTPException, Request
+from pydantic import BaseModel, Field
+
+from .. import db, security
+from ..iputil import client_ip
+from ..services import autoupdate, updater
+
+router = APIRouter(prefix='/api', tags=['settings'])
+
+
+# ── 模型别名映射 ─────────────────────────────────────────
+def _clean_model_map(raw: object) -> dict[str, str]:
+    """校验并归一化要落库的映射表；非法值抛 `ValueError`。
+
+    键可以是真实别名，也可以是兜底的 `*`（没命中任何别名的模型名一律交给它）。
+    唯一会被拦的是「目标写成 `*`」：查表会把 `*` 当成模型名发给上游，而界面上
+    显示着「已设置兜底」，用户从报错里反推不出原因。空键 / 空值条目等于没写，
+    直接丢弃，避免「映射了」与「没映射」两种语义重叠。
+    """
+    if not isinstance(raw, dict):
+        raise ValueError('模型映射必须是一个对象')
+    clean: dict[str, str] = {}
+    for key, value in raw.items():
+        name = str(key).strip()
+        target = str(value).strip() if value is not None else ''
+        if not name or not target:
+            continue
+        if target == '*':
+            raise ValueError(
+                '不能把兜底模型自己当成目标 —— 请填一个真实的模型名（兜底的作用是'
+                '「没命中映射时交给它」，它本身不能是映射目标）')
+        clean[name] = target
+    return clean
+
+
+@router.get('/settings/model-map')
+def get_model_map(user: dict = Depends(security.current_user)) -> dict:
+    return db.get_setting('model_map', {}) or {}
+
+
+@router.post('/settings/model-map')
+def save_model_map(body: dict[str, str],
+                   user: dict = Depends(security.require_admin)) -> dict:
+    """保存映射表。ValueError 转成 400：校验按 4xx 送达，浏览器才能把 detail
+    那句原因显示出来；漏了这一步它就是 500，用户只看到「服务器错误」。"""
+    try:
+        clean = _clean_model_map(body)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    db.set_setting('model_map', clean)
+    return clean
+
+
+# ── GitHub Token（版本检测 / 一键更新）────────────────────
+@router.get('/settings/github-token')
+def get_github_token(user: dict = Depends(security.require_admin)) -> dict:
+    """读当前生效的 GitHub Token（**只回掩码**）。
+
+    为什么只给管理员：它是凭据，能操作对应的 GitHub 账号配额；普通用户不需要它。
+    环境变量里已有值时界面要说明「由部署注入、面板填写不生效」，否则用户会以为
+    自己填的那份没保存。
+    """
+    env_token = next((str(os.environ.get(k) or '').strip()
+                      for k in ('QC_GITHUB_TOKEN', 'GITHUB_TOKEN')
+                      if (os.environ.get(k) or '').strip()), '')
+    stored = str(db.get_setting('github_token', '') or '').strip()
+    effective = env_token or stored
+    return {
+        'configured': bool(effective),
+        'masked': updater.mask_token(effective),
+        'source': 'env' if env_token else ('panel' if stored else ''),
+    }
+
+
+@router.put('/settings/github-token')
+def save_github_token(body: dict, user: dict = Depends(security.require_admin)) -> dict:
+    """保存面板这份 GitHub Token（空串 = 清除）。
+
+    不做格式校验（GitHub 的 token 形态换过几次），但长度上限兜住误贴整段文本；
+    保存后不返回明文——与其它凭据字段同一口径。
+    """
+    raw = str((body or {}).get('token') or '').strip()
+    if len(raw) > 512:
+        raise HTTPException(status_code=400, detail='GitHub Token 过长（最多 512 字符）')
+    db.set_setting('github_token', raw)
+    security.audit(user, 'update_github_token', '', '已配置' if raw else '已清除')
+    return {'configured': bool(raw), 'masked': updater.mask_token(raw)}
+
+
+# ── GitHub 镜像 ──────────────────────────────────────────
+@router.get('/settings/github-mirror')
+def get_github_mirror(user: dict = Depends(security.require_admin)) -> dict:
+    """当前生效的 GitHub 镜像基址 + 来源（面板 / 环境变量 / 未配置）。"""
+    env_value = updater.normalize_mirror(os.environ.get('QC_GITHUB_MIRROR') or '')
+    stored = updater.stored_github_mirror()
+    effective = updater.normalize_mirror(stored or env_value)
+    return {
+        'mirror': effective,
+        'stored': stored,
+        'env_mirror': env_value,
+        'source': 'panel' if stored else ('env' if env_value else ''),
+        'presets': ['https://gh-proxy.com/', 'https://gh-proxy.org/'],
+    }
+
+
+@router.put('/settings/github-mirror')
+def save_github_mirror(body: dict, user: dict = Depends(security.require_admin)) -> dict:
+    """保存镜像基址（空串 = 清除，回落到环境变量）。
+
+    只接受「协议 + 主机 + 可选路径」：拼地址的规则是「基址 + 完整原始地址」，
+    带查询串或片段的写法拼出来必然是一个错误页，所以在入口就拒掉。
+    """
+    raw = str((body or {}).get('mirror') or '').strip()
+    if not raw:
+        db.set_setting('github_mirror', '')
+        security.audit(user, 'update_github_mirror', '', '已清除')
+        return get_github_mirror(user)
+    value = updater.normalize_mirror(raw)
+    if not value:
+        raise HTTPException(
+            status_code=400,
+            detail='镜像地址要以 http:// 或 https:// 开头，且不能带查询串或 # 片段',
+        )
+    db.set_setting('github_mirror', value)
+    security.audit(user, 'update_github_mirror', '', value)
+    return get_github_mirror(user)
+
+
+# ── 自动更新 ─────────────────────────────────────────────
+def _auto_update_payload() -> dict:
+    cfg = autoupdate.get_config()
+    state = autoupdate.get_state()
+    return {
+        **cfg,
+        'state': {
+            'last_check_at': int(float(state.get('last_check_at') or 0)),
+            'last_action': str(state.get('last_action') or ''),
+            'last_message': str(state.get('last_message') or ''),
+            'pending_version': str(state.get('pending_version') or ''),
+        },
+        # 部署形态不支持一键更新时（如 Windows 原生）给出原因，前端据此禁用开关
+        'unsupported_reason': autoupdate.unsupported_reason(),
+        # 面板显示「服务器本地时间」，时间窗按它算
+        'server_tz_offset_minutes': autoupdate.server_tz_offset_minutes(),
+    }
+
+
+@router.get('/settings/auto-update')
+def get_auto_update(user: dict = Depends(security.require_admin)) -> dict:
+    """自动更新配置 + 最近一次巡检的结果。"""
+    return _auto_update_payload()
+
+
+@router.put('/settings/auto-update')
+def save_auto_update(body: dict, request: Request,
+                     user: dict = Depends(security.require_session_admin)) -> dict:
+    """保存自动更新配置。
+
+    与一键更新同一权限（需要会话管理员）：开了它就等于授权面板在无人值守时
+    自行下载并安装新版本、重启服务。
+    """
+    cfg, err = autoupdate.validate_config(body)
+    if cfg is None:
+        raise HTTPException(status_code=400, detail=err)
+    blocked = autoupdate.unsupported_reason()
+    if blocked and cfg['enabled']:
+        raise HTTPException(status_code=409, detail=blocked)
+    saved = autoupdate.save_config(cfg)
+    security.audit(user, 'update_auto_update', '',
+                   (f"开启，每 {saved['interval_hours']} 小时检测，"
+                    f"时间窗 {saved['window_start']:02d}–{saved['window_end']:02d}，"
+                    f"对象 {saved['target']}") if saved['enabled'] else '关闭',
+                   ip=client_ip(request))
+    return _auto_update_payload()
+
+
+# ── 管理端用户 ───────────────────────────────────────────
+class UserIn(BaseModel):
+    username: str = Field(min_length=1, max_length=32)
+    password: str = Field(min_length=1)
+    role: str = Field(pattern='^(admin|viewer)$')
+
+
+class UserPatch(BaseModel):
+    password: str | None = None
+    role: str | None = Field(default=None, pattern='^(admin|viewer)$')
+
+
+def _public(cfg: dict) -> list[dict]:
+    return [{'username': u['username'], 'role': u.get('role', 'viewer')}
+            for u in cfg.get('users', [])]
+
+
+@router.get('/users')
+def list_users(user: dict = Depends(security.current_user)) -> list[dict]:
+    return _public(security.load_users())
+
+
+@router.post('/users')
+def add_user(body: UserIn, request: Request,
+             user: dict = Depends(security.require_session_admin)) -> dict:
+    """新建管理用户。
+
+    审计是必须的：新建用户本身就是权限变更，必须留痕。写随机 sv（会话版本号），
+    避免同名重建后旧 cookie 复活。
+    """
+    pw = str(body.password)
+    problem = security.password_problem(pw, body.username)
+    if problem:
+        raise HTTPException(status_code=400, detail=problem)
+    cfg = security.load_users()
+    if any(u.get('username') == body.username for u in cfg.get('users', [])):
+        raise HTTPException(status_code=409, detail='用户名已存在')
+    cfg.setdefault('users', []).append({
+        'username': body.username,
+        'role': body.role,
+        'pwd_hash': security.make_hash(pw),
+        # 随机初始 sv：删除同名用户再重建时，不会让旧会话「复活」
+        'sv': secrets.randbelow(1 << 30),
+    })
+    security.save_users(cfg)
+    ip = client_ip(request)
+    security.audit(user, 'add_user', body.username,
+                   f'角色={body.role}；来源 {ip}', ip=ip)
+    return {'username': body.username, 'role': body.role}
+
+
+@router.patch('/users/{username}')
+def update_user(username: str, body: UserPatch, request: Request,
+                user: dict = Depends(security.require_session_admin)) -> dict:
+    """改密码 / 改角色。
+
+    两种改动都必须**吊销该用户既有会话**（递增其 sv）：
+      - 改密码：否则被盗会话在改密码后仍能用到过期——旧会话不该还能管理后台
+      - 改角色：权限必须立即生效，不能等 cookie 过期（载荷里的 role 只是快照）
+    吊销按用户进行，不影响其他已登录用户。
+    """
+    cfg = security.load_users()
+    target = next((u for u in cfg.get('users', []) if u.get('username') == username), None)
+    if not target:
+        raise HTTPException(status_code=404, detail='用户不存在')
+
+    changed_pwd = changed_role = False
+    if body.password:
+        pw = str(body.password)
+        # 管理端可能暴露在公网：弱口令等于没有防护，统一走与启动时相同的策略。
+        problem = security.password_problem(pw, username)
+        if problem:
+            raise HTTPException(status_code=400, detail=problem)
+        target['pwd_hash'] = security.make_hash(pw)
+        changed_pwd = True
+    if body.role and body.role != target.get('role'):
+        admins = [u for u in cfg.get('users', []) if u.get('role') == 'admin']
+        if target.get('role') == 'admin' and len(admins) <= 1:
+            raise HTTPException(status_code=400, detail='至少保留一个管理员')
+        target['role'] = body.role
+        changed_role = True
+
+    if changed_pwd or changed_role:
+        try:
+            target['sv'] = int(target.get('sv') or 0) + 1
+        except (TypeError, ValueError):
+            target['sv'] = 1
+
+    security.save_users(cfg)
+    if changed_pwd and username == 'admin':
+        # 改掉初始密码后，把首启时留的那份明文副本抹掉——
+        # 这里只存了初始 admin 密码，改其他用户的密码不应让它失效。
+        security.clear_initial_password_file()
+    if changed_pwd or changed_role:
+        parts = []
+        if changed_pwd:
+            parts.append('改密码')
+        if changed_role:
+            parts.append('改角色')
+        ip = client_ip(request)
+        security.audit(user, 'update_user', username,
+                       '、'.join(parts) + f'；来源 {ip}', ip=ip)
+    # 把自己的密码改了，当前会话也会失效——前端据此提示重新登录
+    self_revoked = bool(changed_pwd and username == user.get('username'))
+    return {
+        'username': target['username'],
+        'role': target.get('role', 'viewer'),
+        'sessions_revoked': changed_pwd or changed_role,
+        'relogin_required': self_revoked,
+    }
+
+
+@router.delete('/users/{username}')
+def delete_user(username: str, request: Request,
+                user: dict = Depends(security.require_session_admin)) -> dict:
+    cfg = security.load_users()
+    users = cfg.get('users', [])
+    target = next((u for u in users if u.get('username') == username), None)
+    if not target:
+        raise HTTPException(status_code=404, detail='用户不存在')
+    admins = [u for u in users if u.get('role') == 'admin']
+    if target.get('role') == 'admin' and len(admins) <= 1:
+        raise HTTPException(status_code=400, detail='至少保留一个管理员')
+    if target.get('username') == user.get('username'):
+        raise HTTPException(status_code=400, detail='不能删除当前登录用户')
+    cfg['users'] = [u for u in users if u.get('username') != username]
+    security.save_users(cfg)
+    if target.get('username') == 'admin':
+        # 被删掉的就是初始账号，那份明文初始密码也随之失效。
+        security.clear_initial_password_file()
+    security.audit(user, 'delete_user', username, f'来源 {client_ip(request)}',
+                   ip=client_ip(request))
+    return {'ok': True}
+
+
+@router.get('/settings/audit-logs')
+def audit_logs(
+    limit: int = 200,
+    offset: int = 0,
+    user: dict = Depends(security.require_admin),
+) -> dict:
+    """管理端审计日志（登录、改密码、增删用户、改安全配置等）。
+
+    仅管理员可读：里面含用户名与来源 IP，属于敏感信息。
+    """
+    return {
+        'items': db.list_audit_logs(limit=limit, offset=offset),
+        'total': db.count_audit_logs(),
+    }
