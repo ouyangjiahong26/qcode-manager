@@ -177,10 +177,13 @@ class DailyHourly(RouterTestCase):
     def test_hourly_24_buckets(self) -> None:
         today = db.day_of()
         db.bump_usage(1, 'glm-4.7', 7, 8)               # 当前小时
+        # 固定桶选一个必不与当前小时重合的小时，否则裸 INSERT 撞
+        # bump_usage 已写的行（UNIQUE day+hour+key_id+model）
+        other_hour = (db.hour_of() + 12) % 24
         db.execute(
             'INSERT INTO usage_hourly(day, hour, key_id, model, requests, '
-            'prompt_tokens, completion_tokens) VALUES(?, 3, 1, ?, 2, 5, 6)',
-            (today, 'glm-4.7'),
+            'prompt_tokens, completion_tokens) VALUES(?, ?, 1, ?, 2, 5, 6)',
+            (today, other_hour, 'glm-4.7'),
         )
         # 当前小时的一条失败
         now_hour = db.hour_of()
@@ -191,7 +194,7 @@ class DailyHourly(RouterTestCase):
         self.assertEqual(len(rows), 24)
         self.assertEqual([r['hour'] for r in rows], list(range(24)))
         by_hour = {r['hour']: r for r in rows}
-        self.assertEqual(by_hour[3]['requests'], 2)
+        self.assertEqual(by_hour[other_hour]['requests'], 2)
         self.assertEqual(by_hour[now_hour]['requests'], 1)
         self.assertEqual(by_hour[now_hour]['failed'], 1)
 

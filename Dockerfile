@@ -52,21 +52,12 @@ RUN set -eu; \
 WORKDIR /app
 
 # 先装依赖（层缓存：改代码不必重装依赖）
-# 可选：PyPI 镜像（留空 = 官方源，失败自动降级清华镜像）
-ARG PIP_INDEX_URL=""
+# PyPI 源默认清华镜像：官方源在部分网络环境慢而不报错，失败降级逻辑等不到触发；
+# 需要换源时构建参数覆盖：docker compose build --build-arg PIP_INDEX_URL=https://pypi.org/simple
+ARG PIP_INDEX_URL="https://pypi.tuna.tsinghua.edu.cn/simple"
 COPY server/requirements.txt /app/server/requirements.txt
-RUN set -eu; \
-    pip_install() { \
-        pip install --no-cache-dir --retries 5 --timeout 60 --index-url "$1" -r /app/server/requirements.txt; \
-    }; \
-    if [ -n "${PIP_INDEX_URL}" ]; then \
-        pip_install "${PIP_INDEX_URL}"; \
-    elif pip_install https://pypi.org/simple; then \
-        echo "pip: 依赖安装成功（官方源）"; \
-    else \
-        echo "pip: 官方源失败，改用清华镜像重试…" >&2; \
-        pip_install https://pypi.tuna.tsinghua.edu.cn/simple; \
-    fi
+RUN pip install --no-cache-dir --retries 5 --timeout 60 \
+        --index-url "${PIP_INDEX_URL}" -r /app/server/requirements.txt
 
 # 再拷代码与前端产物
 COPY server /app/server
