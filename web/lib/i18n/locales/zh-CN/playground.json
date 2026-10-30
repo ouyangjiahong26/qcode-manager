@@ -1,0 +1,53 @@
+{
+  "playground": {
+    "title": "测试台",
+    "description": "用登录会话直接试调上游，无需创建 API 密钥",
+    "unreadable": "响应没有可读的数据流",
+    "emptyAnswer": "（模型没有返回内容）",
+    "stopped": "已中断",
+    "modelsRefreshed": "已重新拉取模型列表",
+    "refreshModels": "刷新模型",
+    "clearChat": "清空对话",
+    "partialFailed": "有数据没能刷新成功，展示的可能是稍早的内容",
+    "adminRequired": "需要管理员权限",
+    "adminRequiredDesc": "测试台会真实消耗账号调用，仅管理员可用",
+    "startTitle": "开始一段对话",
+    "startDesc": "输入内容即可试调当前选中的模型，回答以流式返回",
+    "currentModel": "当前模型：",
+    "copyAnswer": "复制回答",
+    "tokensTitle": "本条回答的实测 token 消耗",
+    "tokens": "{n} tokens",
+    "modelsAvailable": "可选模型 {n} 个",
+    "noModels": "暂无可用模型",
+    "sessionTokensTitle": "本次会话累计 token 消耗",
+    "sessionTokens": "{n} tokens",
+    "footnote1": "对话经账号池中的 PAT 转发到上游，会真实消耗调用",
+    "footnote2": "调用记录会出现在日志页（密钥列显示为「—」）"
+  },
+  "chat": {
+    "ph1": "问点什么…",
+    "ph2": "试试让模型写一段代码…",
+    "ph3": "换个模型对比一下回答…",
+    "ph4": "直接回车发送，Shift+Enter 换行…",
+    "ph5": "想测试上游连通性？随便聊两句…",
+    "send": "发送",
+    "stop": "停止生成",
+    "selectModel": "选择模型",
+    "noModels": "暂无可用模型",
+    "reasoningSuffix": " · 推理 {efforts}",
+    "effort": "思考强度",
+    "effortTitle": "选择推理档位",
+    "effortUnsupported": "该模型未声明推理档位",
+    "effortUnset": "不指定",
+    "keyboardHint": "Enter 发送 · Shift+Enter 换行"
+  },
+  "effort": {
+    "off": "关闭",
+    "minimal": "极低",
+    "low": "低",
+    "medium": "中",
+    "high": "高",
+    "xhigh": "超高",
+    "max": "最高"
+  }
+}
